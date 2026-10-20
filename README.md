@@ -4,8 +4,9 @@ Cilt lezyonu görüntülerini sınıflandıran bir derin öğrenme modelinin kar
 
 > ⚠️ **Uyarı:** Bu proje eğitim ve araştırma amaçlıdır. Tıbbi teşhis aracı değildir ve klinik kararların yerine geçmez.
 
-**Bitirme Projesi** · Fırat Üniveritesi 
-**Hazırlayan:** Sabri Baz ·]
+**Bitirme Projesi** · Fırat Üniversitesi, Yazılım Mühendisliği
+
+**Hazırlayan:** Sabri Baz 
 
 ---
 
@@ -61,6 +62,20 @@ Veri seti lisansı (ticari olmayan kullanım) ve boyutu nedeniyle **bu repoda ye
 | Dermatofibrom | 76 | 17 | 22 |
 | **Toplam** | **7054** | **1464** | **1497** |
 
+### Veri Kalite Kontrolleri
+
+| Kontrol | Sonuç |
+|---|---|
+| Görüntü çözünürlüğü | 10.015 görüntünün tamamı 600×450 |
+| Birebir aynı dosya (MD5) | 2 çift; her çift aynı lezyon ve tanıya ait, aynı kümede. Kümeler arası sızıntı yok |
+| Bilinmeyen yaş | 57 görüntü |
+| Bilinmeyen cinsiyet | 57 görüntü (47'sinde yaş da bilinmiyor) |
+| Bilinmeyen lezyon bölgesi | 234 görüntü |
+
+![Sınıf başına görüntü sayısı](results/01_sinif_dagilimi.png)
+
+Ayrım dosyası: [`results/ham10000_split_ids.csv`](results/ham10000_split_ids.csv) · Ayrım tablosu: [`results/01_ayrim_tablosu.csv`](results/01_ayrim_tablosu.csv)
+
 ## Kullanılan Teknolojiler
 
 | Katman | Teknoloji |
@@ -78,7 +93,7 @@ Veri seti lisansı (ticari olmayan kullanım) ve boyutu nedeniyle **bu repoda ye
 notebooks/   Colab defterleri (her adım için bir defter)
 src/         Tekrar kullanılan Python kodları
 results/     Küçük sonuç tabloları ve grafikler
-docs/        Proje önerisi, haftalık notlar, tez taslakları
+docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 ```
 
 ## İlerleme
@@ -100,7 +115,7 @@ docs/        Proje önerisi, haftalık notlar, tez taslakları
 
 | Hafta | Yapılanlar | Sonuç / Not |
 |---|---|---|
-| 1 | Veri indirildi, incelendi, lezyon bazlı ayrım yapıldı | 10.015 görüntü, 7.470 lezyon; görüntülerin ~%45'i birden fazla fotoğrafı olan lezyonlara ait, bu yüzden lezyon bazlı ayrım zorunlu |
+| 1 | Veri indirildi, incelendi, lezyon bazlı ayrım yapıldı; ek kalite kontrolleri (çözünürlük, MD5 kopya, bilinmeyen meta veri) | 10.015 görüntü, 7.470 lezyon; görüntülerin ~%45'i birden fazla fotoğrafı olan lezyonlara ait, bu yüzden lezyon bazlı ayrım zorunlu. Kümeler arası sızıntı yok |
 
 ## Kaynaklar
 
