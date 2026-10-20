@@ -1,0 +1,40 @@
+# --- Gizli anahtarlar (ASLA yüklenmemeli) ---
+kaggle.json
+.env
+*.key
+*secret*
+*token*
+
+# --- Veri seti (lisans ve boyut nedeniyle repoda yok) ---
+data/
+*.zip
+*.jpg
+*.jpeg
+*.png.raw
+HAM10000*/
+ham10000*/
+
+# --- Büyük model ve indeks dosyaları (Google Drive'da tutulur) ---
+models/
+*.h5
+*.keras
+*.weights.h5
+*.pt
+*.pth
+*.ckpt
+*.index
+*.faiss
+*.npy
+*.npz
+*.parquet
+
+# --- Python ve Jupyter ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# --- Sistem dosyaları ---
+.DS_Store
+Thumbs.db
