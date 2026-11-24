@@ -1,0 +1,29 @@
+{
+  "model": "cnn_b0_v2",
+  "img": 224,
+  "siniflar": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "dengeli_dogruluk": 0.6727919902776405,
+  "dogruluk": 0.7663934426229508,
+  "makro_f1": 0.601505693048734,
+  "makro_auc": 0.9524591190204857,
+  "melanom_duyarliligi": 0.44642857142857145,
+  "ayarlar": {
+    "model_tipi": "B0",
+    "agirlik_tipi": "karekok",
+    "batch": 32,
+    "epoch_bas": 5,
+    "epoch_ince": 40,
+    "lr_bas": 0.001,
+    "lr_ince": 0.0001,
+    "acilan_katman": "hepsi",
+    "tur_sayisi": 17
+  }
+}

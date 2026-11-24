@@ -32,17 +32,20 @@ Tüm görüntüler 600×450 çözünürlüktedir. Dosya parmak izi (MD5) kontrol
 ## Adım 2-3: CNN Eğitimi, Seçimi ve Test
 
 ### Süreç
-EfficientNet-B0 dört sürümde (v1-v4) eğitilmiş, B3 v3 sürümünde eklenmiştir. Doğrulama dengeli doğruluğu v1: 0,653, v2: 0,673; v3 ve v4 ile iyileştirme sürmüştür. v2'de modelin yanlış turu (gürültülü dengeli doğruluğa göre) seçilmesi v3'te düzeltilmiş, v4'te ön işleme tutarlılığı sağlanmıştır.
+EfficientNet-B0 dört sürümde (v1-v4) eğitilmiş, B3 v3 sürümünde eklenmiştir. Doğrulama dengeli doğruluğu v1: 0,653, v2: 0,673; v3: 0,695 ile en iyi sonuca ulaşılmıştır; v4 daha kötü çıkmıştır (0,658). v2'de modelin yanlış turu (gürültülü dengeli doğruluğa göre) seçilmesi v3'te düzeltilmiş, v4'te ön işleme tutarlılığı sağlanmıştır.
 
 ### Son CNN seçimi
 Adaylar (B0 v3, B3 v3, B0 v4, TTA'lı hâlleri ve toplulukları) test kümesine bakılmadan sabitlenmiş ve yalnızca doğrulamada karşılaştırılmıştır. Topluluk ile Topluluk + TTA dengeli doğrulukta eşit sayılmış (fark < 0,01), negatif log olabilirlik düşük olduğu için **Topluluk + TTA** seçilmiştir. Topluluğun üyeleri B0 v3 ve B3 v3'tür (B0 v4 tek başına aday olarak değerlendirilmiş, topluluğa girmemiştir). Sıcaklık T = 1,178 (ham model fazla özgüvenli), klinik eşik τ = 0,8.
 
-### Test sonuçları (ayarlar dondurulduktan sonra, tek açılış)
+### Test sonuçları (ayarlar dondurulduktan sonra)
 - Ayarsız: doğruluk 0,821, dengeli doğruluk 0,653 (%95 GA 0,590-0,728), melanom duyarlılığı 0,756 (0,667-0,838).
 - Klinik eşik: dengeli doğruluk 0,705, melanom duyarlılığı 0,869 (0,803-0,928), nevüs duyarlılığı 0,734.
-- Topluluk + TTA ile tek model B0 v3 arasındaki fark istatistiksel olarak belirgin değildir (eşleştirilmiş bootstrap; aralık 0'ı içeriyor). Topluluğun asıl faydası kalibrasyondadır.
+- Topluluk + TTA ile tek model B0 v3 arasındaki fark istatistiksel olarak belirgin değildir (eşleştirilmiş bootstrap; aralık 0'ı içeriyor). Topluluğun asıl faydası melanom duyarlılığındadır (tek model B0 v3: 0,571 → Topluluk + TTA: 0,756); kalibrasyon hatası (ECE) iki modelde de aynıdır.
 - Yalnızca patolojiyle doğrulanmış 804 test görüntüsünde dengeli doğruluk 0,575 (ayarsız) / 0,633 (klinik); zor vakalarda başarım düşmektedir.
 - Nadir sınıflarda (dermatofibrom, vasküler lezyon: 22'şer görüntü) sonuçlar dalgalıdır.
+
+### Şeffaflık notu (test kümesi)
+Test kümesi dondurma sonrası kullanılmıştır, ancak tamamen "tek açılış" değildir: önceki sürümde (`03_kalibrasyon_test_gradcam_v1`) B0 v3'ün test sonucu görülmüştür. Son CNN seçimi (Topluluk + TTA) ve ayarları yine yalnızca doğrulama kümesine dayanmaktadır; ancak B0 v3'ün test sonucunun önceden bilinmesi bir sınırlılıktır.
 
 ### Uzmana yönlendirme (Bulanık mantık kapısının zeminini oluşturur)
 Güveni en düşük %20 vaka uzmana yönlendirildiğinde (ayarsız) doğruluk 0,821 → 0,903, kaçırılan melanom 41 → 16 olmaktadır. %50 kapsamda doğruluk 0,971'dir. Bu, güvenin anlamlı bir belirsizlik sinyali olduğunu gösterir.

@@ -1,0 +1,27 @@
+{
+  "model": "cnn_b0",
+  "img": 224,
+  "siniflar": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "dengeli_dogruluk": 0.6528101086139045,
+  "dogruluk": 0.6420765027322405,
+  "makro_f1": 0.4865843867205542,
+  "makro_auc": 0.9289004959310346,
+  "melanom_duyarliligi": 0.5833333333333334,
+  "ayarlar": {
+    "batch": 32,
+    "epoch_bas": 5,
+    "epoch_ince": 25,
+    "lr_bas": 0.001,
+    "lr_ince": 0.0001,
+    "acilan_katman": 60,
+    "tur_sayisi": 13
+  }
+}
