@@ -128,7 +128,7 @@ Eğitilmiş modeller (`.keras`, 80-215 MB) ve logit dosyaları (`.npy`) boyut ne
 ## Repo Yapısı
 
 ```
-notebooks/   Colab defterleri (NN_konu_vX.ipynb; ayrıntı için notebooks/README.md)
+notebooks/   Colab defterleri (NN_konu_vX.ipynb; v3 için _b0 ve _b3 çalıştırmaları ayrı defterlerdir; ayrıntı için notebooks/README.md)
 src/         Tekrar kullanılan Python kodları
 results/     Küçük sonuç tabloları, dondurulmuş ayar dosyaları (.json) ve grafikler
 docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
@@ -154,7 +154,7 @@ docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 | Hafta | Yapılanlar | Sonuç / Not |
 |---|---|---|
 | 1 | Veri indirildi, incelendi, lezyon bazlı ayrım yapıldı; ek kalite kontrolleri (çözünürlük, MD5 kopya, bilinmeyen meta veri) | 10.015 görüntü, 7.470 lezyon; görüntülerin ~%45'i birden fazla fotoğrafı olan lezyonlara ait, bu yüzden lezyon bazlı ayrım zorunlu. Kümeler arası sızıntı yok |
-| 2-3 | CNN eğitimi (4 sürüm, B0 ve B3), aday ve topluluk karşılaştırması, sıcaklık ölçekleme, test değerlendirmesi, uzmana yönlendirme analizi, Grad-CAM | Son CNN: Topluluk (B0 v3 + B3 v3) + TTA. Test: doğruluk 0,821, dengeli doğruluk 0,653, melanom duyarlılığı 0,756; klinik eşikle melanom duyarlılığı 0,869. Isı haritalarının kenar payı ortanca %14 |
+| 2-3 | CNN eğitimi (4 sürüm, B0 ve B3; v4 v3'ten daha kötü çıktı: 0,658 / 0,695), aday ve topluluk karşılaştırması, sıcaklık ölçekleme, test değerlendirmesi, uzmana yönlendirme analizi, Grad-CAM | Son CNN: Topluluk (B0 v3 + B3 v3) + TTA. Test: doğruluk 0,821, dengeli doğruluk 0,653, melanom duyarlılığı 0,756; klinik eşikle melanom duyarlılığı 0,869. Isı haritalarının kenar payı ortanca %14 |
 
 ## Kaynaklar
 
