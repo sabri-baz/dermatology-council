@@ -1,0 +1,14 @@
+{
+  "aday": "Topluluk + TTA",
+  "uyeler": [
+    {"model": "cnn_b0_v3", "dosya": "models/cnn_b0_v3.keras", "img": 224, "onisleme": "kes_uint8", "cam_katmani": "top_activation"},
+    {"model": "cnn_b3_v3", "dosya": "models/cnn_b3_v3.keras", "img": 300, "onisleme": "kes_uint8", "cam_katmani": "top_activation"}
+  ],
+  "tta": true,
+  "T": 1.1782005560893316,
+  "tau_klinik": 0.8,
+  "tau_dengeli": 1.7,
+  "ana_karar": "klinik",
+  "log_oncel": [-3.410311657230297, -2.9614527572135056, -2.2084870814426503, -4.530616770509666, -2.2059097604283497, -0.3996696293100187, -4.276382632125426],
+  "siniflar": ["akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"]
+}
