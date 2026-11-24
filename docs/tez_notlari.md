@@ -26,3 +26,30 @@ Tüm görüntüler 600×450 çözünürlüktedir. Dosya parmak izi (MD5) kontrol
 - Veri iki merkezden gelmektedir ve hastalar ağırlıklı olarak açık tenlidir; ten tipi etiketi bulunmamaktadır.
 - Görüntülerin tamamı dermatoskopiktir; akıllı telefon fotoğraflarına genellenebilirlik bu çalışmanın kapsamı dışındadır.
 - Nadir sınıflarda test örneği azdır (dermatofibrom ve vasküler lezyon için 22'şer görüntü); bu sınıflardaki sonuçlar dalgalı olabilir.
+
+---
+
+## Adım 2-3: CNN Eğitimi, Seçimi ve Test
+
+### Süreç
+EfficientNet-B0 dört sürümde (v1-v4) eğitilmiş, B3 v3 sürümünde eklenmiştir. Doğrulama dengeli doğruluğu v1: 0,653, v2: 0,673; v3 ve v4 ile iyileştirme sürmüştür. v2'de modelin yanlış turu (gürültülü dengeli doğruluğa göre) seçilmesi v3'te düzeltilmiş, v4'te ön işleme tutarlılığı sağlanmıştır.
+
+### Son CNN seçimi
+Adaylar (B0 v3, B3 v3, B0 v4, TTA'lı hâlleri ve toplulukları) test kümesine bakılmadan sabitlenmiş ve yalnızca doğrulamada karşılaştırılmıştır. Topluluk ile Topluluk + TTA dengeli doğrulukta eşit sayılmış (fark < 0,01), negatif log olabilirlik düşük olduğu için **Topluluk + TTA** seçilmiştir. Sıcaklık T = 1,178 (ham model fazla özgüvenli), klinik eşik τ = 0,8.
+
+### Test sonuçları (ayarlar dondurulduktan sonra, tek açılış)
+- Ayarsız: doğruluk 0,821, dengeli doğruluk 0,653 (%95 GA 0,590-0,728), melanom duyarlılığı 0,756 (0,667-0,838).
+- Klinik eşik: dengeli doğruluk 0,705, melanom duyarlılığı 0,869 (0,803-0,928), nevüs duyarlılığı 0,734.
+- Topluluk + TTA ile tek model B0 v3 arasındaki fark istatistiksel olarak belirgin değildir (eşleştirilmiş bootstrap; aralık 0'ı içeriyor). Topluluğun asıl faydası kalibrasyondadır.
+- Yalnızca patolojiyle doğrulanmış 804 test görüntüsünde dengeli doğruluk 0,575 (ayarsız) / 0,633 (klinik); zor vakalarda başarım düşmektedir.
+- Nadir sınıflarda (dermatofibrom, vasküler lezyon: 22'şer görüntü) sonuçlar dalgalıdır.
+
+### Uzmana yönlendirme (Bulanık mantık kapısının zeminini oluşturur)
+Güveni en düşük %20 vaka uzmana yönlendirildiğinde (ayarsız) doğruluk 0,821 → 0,903, kaçırılan melanom 41 → 16 olmaktadır. %50 kapsamda doğruluk 0,971'dir. Bu, güvenin anlamlı bir belirsizlik sinyali olduğunu gösterir.
+
+### Grad-CAM gözlemi
+Dermatoskop kenar şeridi görüntü alanının %35'ini kaplamaktadır; ısı haritasının kenardaki payı ortancada %14'tür ve görüntülerin yalnızca %1'inde kenar payı alan payından büyüktür. Yani model çoğunlukla kenar artefaktına değil lezyona bakmaktadır (Adım 1'deki kısa yol endişesi büyük ölçüde giderilmiştir).
+
+### Sınırlılıklar
+- Tek bölünme (random_state = 42); farklı bölünmelerle tekrar yapılmamıştır.
+- İyi kalibrasyon yanlış kararların olmadığı anlamına gelmez: klinik eşikte nevüs duyarlılığı 0,734'e düşerek yanlış alarm (169 görüntü) artar. Konsey bu ödünleşimi azaltmak için tasarlanmıştır.

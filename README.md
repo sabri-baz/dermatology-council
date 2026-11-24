@@ -76,6 +76,26 @@ Veri seti lisansı (ticari olmayan kullanım) ve boyutu nedeniyle **bu repoda ye
 
 Ayrım dosyası: [`results/ham10000_split_ids.csv`](results/ham10000_split_ids.csv) · Ayrım tablosu: [`results/01_ayrim_tablosu.csv`](results/01_ayrim_tablosu.csv)
 
+## Sonuçlar: Adım 2-3 (CNN)
+
+Seçim yalnızca doğrulama kümesinde yapıldı; test kümesi ayarlar dondurulduktan sonra bir kez açıldı. Son CNN: **Topluluk + TTA** (EfficientNet-B0 v3, B3 v3, B0 v4 ortalaması; sıcaklık T = 1,178).
+
+| Test kümesi (1.497 görüntü) | Ayarsız karar | Klinik eşikli karar (τ = 0,8) |
+|---|---|---|
+| Doğruluk | 0,821 | 0,741 |
+| Dengeli doğruluk | 0,653 | 0,705 |
+| Melanom duyarlılığı | 0,756 | 0,869 |
+| Nevüs duyarlılığı | 0,887 | 0,734 |
+
+Güven kalibrasyonu iyidir (ECE ≈ 0,02). Güven düşük vakaların %20'si uzmana yönlendirildiğinde doğruluk 0,903'e, kaçırılan melanom sayısı 41'den 16'ya iner.
+
+| | |
+|---|---|
+| ![Karışıklık matrisi](results/03v2_test_karisiklik_matrisi.png) | ![Uzmana yönlendirme](results/03v2_uzmana_yonlendirme.png) |
+| ![Kalibrasyon](results/03v2_kalibrasyon_test.png) | ![Grad-CAM](results/03v2_gradcam_kenar.png) |
+
+Ayrıntılar ve sınırlılıklar: [`docs/tez_notlari.md`](docs/tez_notlari.md)
+
 ## Kullanılan Teknolojiler
 
 | Katman | Teknoloji |
@@ -90,7 +110,7 @@ Ayrım dosyası: [`results/ham10000_split_ids.csv`](results/ham10000_split_ids.c
 ## Repo Yapısı
 
 ```
-notebooks/   Colab defterleri (her adım için bir defter)
+notebooks/   Colab defterleri (NN_konu_vX.ipynb; ayrıntı için notebooks/README.md)
 src/         Tekrar kullanılan Python kodları
 results/     Küçük sonuç tabloları ve grafikler
 docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
@@ -99,8 +119,8 @@ docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 ## İlerleme
 
 - [x] **Adım 1:** Veri indirme, inceleme ve lezyon bazlı ayrım
-- [ ] **Adım 2:** CNN eğitimi (EfficientNet)
-- [ ] **Adım 3:** Kalibrasyon, Grad-CAM, değerlendirme (Deney 1)
+- [x] **Adım 2:** CNN eğitimi (EfficientNet B0/B3, 4 sürüm)
+- [x] **Adım 3:** Kalibrasyon, Grad-CAM, değerlendirme (Deney 1); son CNN: Topluluk + TTA, donduruldu
 - [ ] **Adım 4:** Benzer vaka arşivi (CNN gömmeleri + FAISS)
 - [ ] **Adım 5:** PubMed literatür kütüphanesi (MedCPT + FAISS)
 - [ ] **Adım 6:** Literatür ajanı (Deney 2)
@@ -116,6 +136,7 @@ docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 | Hafta | Yapılanlar | Sonuç / Not |
 |---|---|---|
 | 1 | Veri indirildi, incelendi, lezyon bazlı ayrım yapıldı; ek kalite kontrolleri (çözünürlük, MD5 kopya, bilinmeyen meta veri) | 10.015 görüntü, 7.470 lezyon; görüntülerin ~%45'i birden fazla fotoğrafı olan lezyonlara ait, bu yüzden lezyon bazlı ayrım zorunlu. Kümeler arası sızıntı yok |
+| 2-3 | CNN eğitimi (4 sürüm, B0 ve B3), aday ve topluluk karşılaştırması, sıcaklık ölçekleme, test değerlendirmesi, uzmana yönlendirme analizi, Grad-CAM | Son CNN: Topluluk (B0 v3 + B3 v3 + B0 v4) + TTA. Test: doğruluk 0,821, dengeli doğruluk 0,653, melanom duyarlılığı 0,756; klinik eşikle melanom duyarlılığı 0,869. Isı haritalarının kenar payı ortanca %14 |
 
 ## Kaynaklar
 
