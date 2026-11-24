@@ -78,7 +78,7 @@ Ayrım dosyası: [`results/ham10000_split_ids.csv`](results/ham10000_split_ids.c
 
 ## Sonuçlar: Adım 2-3 (CNN)
 
-Seçim yalnızca doğrulama kümesinde yapıldı; test kümesi ayarlar dondurulduktan sonra bir kez açıldı. Son CNN: **Topluluk + TTA** (EfficientNet-B0 v3, B3 v3, B0 v4 ortalaması; sıcaklık T = 1,178).
+Seçim yalnızca doğrulama kümesinde yapıldı; test kümesi ayarlar dondurulduktan sonra bir kez açıldı. Son CNN: **Topluluk + TTA** (EfficientNet-B0 v3 ve B3 v3 ortalaması, test zamanı artırma ile; sıcaklık T = 1,178).
 
 | Test kümesi (1.497 görüntü) | Ayarsız karar | Klinik eşikli karar (τ = 0,8) |
 |---|---|---|
@@ -96,6 +96,18 @@ Güven kalibrasyonu iyidir (ECE ≈ 0,02). Güven düşük vakaların %20'si uzm
 
 Ayrıntılar ve sınırlılıklar: [`docs/tez_notlari.md`](docs/tez_notlari.md)
 
+**Dondurulmuş son CNN ayarları:** [`results/03v2_son_cnn.json`](results/03v2_son_cnn.json) (üyeler, sıcaklık, eşikler, sınıf öncülleri). Adım 2'nin tek model seçimi: [`results/02_secilen_model.json`](results/02_secilen_model.json). Sürüm karşılaştırmaları için `results/02_cnn_b0_v{2,3,4}_*.png` (eğitim eğrileri ve karışıklık matrisleri).
+
+### Modeller ve büyük dosyalar
+
+Eğitilmiş modeller (`.keras`, 80-215 MB) ve logit dosyaları (`.npy`) boyut nedeniyle repoda yoktur; Google Drive'daki `models/` klasöründe tutulur:
+
+| Dosya | Açıklama |
+|---|---|
+| `cnn_b0_v3.keras`, `cnn_b3_v3.keras` | Son topluluğun üyeleri |
+| `cnn_b0_v2.keras`, `cnn_b0_v4.keras` | Karşılaştırma modelleri |
+| `son_cnn_dogrulama_logit.npy`, `son_cnn_test_logit.npy` | Son CNN'in ham çıktıları (Adım 8'de bulanık mantık için kullanılacak) |
+
 ## Kullanılan Teknolojiler
 
 | Katman | Teknoloji |
@@ -112,7 +124,7 @@ Ayrıntılar ve sınırlılıklar: [`docs/tez_notlari.md`](docs/tez_notlari.md)
 ```
 notebooks/   Colab defterleri (NN_konu_vX.ipynb; ayrıntı için notebooks/README.md)
 src/         Tekrar kullanılan Python kodları
-results/     Küçük sonuç tabloları ve grafikler
+results/     Küçük sonuç tabloları, dondurulmuş ayar dosyaları (.json) ve grafikler
 docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 ```
 
@@ -136,7 +148,7 @@ docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 | Hafta | Yapılanlar | Sonuç / Not |
 |---|---|---|
 | 1 | Veri indirildi, incelendi, lezyon bazlı ayrım yapıldı; ek kalite kontrolleri (çözünürlük, MD5 kopya, bilinmeyen meta veri) | 10.015 görüntü, 7.470 lezyon; görüntülerin ~%45'i birden fazla fotoğrafı olan lezyonlara ait, bu yüzden lezyon bazlı ayrım zorunlu. Kümeler arası sızıntı yok |
-| 2-3 | CNN eğitimi (4 sürüm, B0 ve B3), aday ve topluluk karşılaştırması, sıcaklık ölçekleme, test değerlendirmesi, uzmana yönlendirme analizi, Grad-CAM | Son CNN: Topluluk (B0 v3 + B3 v3 + B0 v4) + TTA. Test: doğruluk 0,821, dengeli doğruluk 0,653, melanom duyarlılığı 0,756; klinik eşikle melanom duyarlılığı 0,869. Isı haritalarının kenar payı ortanca %14 |
+| 2-3 | CNN eğitimi (4 sürüm, B0 ve B3), aday ve topluluk karşılaştırması, sıcaklık ölçekleme, test değerlendirmesi, uzmana yönlendirme analizi, Grad-CAM | Son CNN: Topluluk (B0 v3 + B3 v3) + TTA. Test: doğruluk 0,821, dengeli doğruluk 0,653, melanom duyarlılığı 0,756; klinik eşikle melanom duyarlılığı 0,869. Isı haritalarının kenar payı ortanca %14 |
 
 ## Kaynaklar
 

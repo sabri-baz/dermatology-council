@@ -35,7 +35,7 @@ Tüm görüntüler 600×450 çözünürlüktedir. Dosya parmak izi (MD5) kontrol
 EfficientNet-B0 dört sürümde (v1-v4) eğitilmiş, B3 v3 sürümünde eklenmiştir. Doğrulama dengeli doğruluğu v1: 0,653, v2: 0,673; v3 ve v4 ile iyileştirme sürmüştür. v2'de modelin yanlış turu (gürültülü dengeli doğruluğa göre) seçilmesi v3'te düzeltilmiş, v4'te ön işleme tutarlılığı sağlanmıştır.
 
 ### Son CNN seçimi
-Adaylar (B0 v3, B3 v3, B0 v4, TTA'lı hâlleri ve toplulukları) test kümesine bakılmadan sabitlenmiş ve yalnızca doğrulamada karşılaştırılmıştır. Topluluk ile Topluluk + TTA dengeli doğrulukta eşit sayılmış (fark < 0,01), negatif log olabilirlik düşük olduğu için **Topluluk + TTA** seçilmiştir. Sıcaklık T = 1,178 (ham model fazla özgüvenli), klinik eşik τ = 0,8.
+Adaylar (B0 v3, B3 v3, B0 v4, TTA'lı hâlleri ve toplulukları) test kümesine bakılmadan sabitlenmiş ve yalnızca doğrulamada karşılaştırılmıştır. Topluluk ile Topluluk + TTA dengeli doğrulukta eşit sayılmış (fark < 0,01), negatif log olabilirlik düşük olduğu için **Topluluk + TTA** seçilmiştir. Topluluğun üyeleri B0 v3 ve B3 v3'tür (B0 v4 tek başına aday olarak değerlendirilmiş, topluluğa girmemiştir). Sıcaklık T = 1,178 (ham model fazla özgüvenli), klinik eşik τ = 0,8.
 
 ### Test sonuçları (ayarlar dondurulduktan sonra, tek açılış)
 - Ayarsız: doğruluk 0,821, dengeli doğruluk 0,653 (%95 GA 0,590-0,728), melanom duyarlılığı 0,756 (0,667-0,838).

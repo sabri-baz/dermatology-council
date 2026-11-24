@@ -1,0 +1,7 @@
+{
+  "model": "cnn_b0_v3",
+  "tta": false,
+  "dengeli_dogruluk": 0.6952647241074276,
+  "dogrulama_nll": 0.4601953437562934,
+  "kural": "en yüksek doğrulama dengeli doğruluğu; 0,01 içinde ise en düşük doğrulama NLL"
+}
