@@ -78,7 +78,7 @@ Ayrım dosyası: [`results/ham10000_split_ids.csv`](results/ham10000_split_ids.c
 
 ## Sonuçlar: Adım 2-3 (CNN)
 
-Seçim yalnızca doğrulama kümesinde yapıldı; test kümesi ayarlar dondurulduktan sonra bir kez açıldı. Son CNN: **Topluluk + TTA** (EfficientNet-B0 v3 ve B3 v3 ortalaması, test zamanı artırma ile; sıcaklık T = 1,178).
+Seçim yalnızca doğrulama kümesinde yapıldı; son CNN'in ayarları dondurulduktan sonra test kümesi açıldı. *Şeffaflık notu:* önceki sürümde (`03_..._v1`) B0 v3'ün test sonucu görülmüştü; seçim ve ayarlar yine yalnızca doğrulamaya dayanır. Son CNN: **Topluluk + TTA** (EfficientNet-B0 v3 ve B3 v3 ortalaması, test zamanı artırma ile; sıcaklık T = 1,178).
 
 | Test kümesi (1.497 görüntü) | Ayarsız karar | Klinik eşikli karar (τ = 0,8) |
 |---|---|---|
@@ -97,6 +97,12 @@ Güven kalibrasyonu iyidir (ECE ≈ 0,02). Güven düşük vakaların %20'si uzm
 Ayrıntılar ve sınırlılıklar: [`docs/tez_notlari.md`](docs/tez_notlari.md)
 
 **Dondurulmuş son CNN ayarları:** [`results/03v2_son_cnn.json`](results/03v2_son_cnn.json) (üyeler, sıcaklık, eşikler, sınıf öncülleri). Adım 2'nin tek model seçimi: [`results/02_secilen_model.json`](results/02_secilen_model.json). Sürüm karşılaştırmaları için `results/02_cnn_b0_v{2,3,4}_*.png` (eğitim eğrileri ve karışıklık matrisleri).
+
+**Tezde kanıt olarak kullanılacak sonuç dosyaları:**
+- [`results/03v2_secim_ve_donmus_ayarlar.json`](results/03v2_secim_ve_donmus_ayarlar.json): bütün adayların doğrulama tablosu ve dondurulmuş ayarları
+- [`results/03v2_test_sonuclari.json`](results/03v2_test_sonuclari.json): bütün adayların test sonuçları
+- `results/02_*_dogrulama_metrikleri.json`: v1-v4 ve B3 v3 doğrulama metrikleri
+- `results/02_cnn_b3_v3_egitim_egrisi.png`, `results/02_cnn_b3_v3_karisiklik_matrisi.png`: B3 v3 grafikleri
 
 ### Modeller ve büyük dosyalar
 

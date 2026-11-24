@@ -18,5 +18,5 @@ Defterler Google Colab'da çalıştırılır; veri ve modeller Google Drive'da t
 
 ## Notlar
 
-- Test kümesi yalnızca Adım 3'te, ayarlar doğrulamada dondurulduktan sonra bir kez açılmıştır.
+- Test kümesi yalnızca Adım 3'te kullanılmıştır. Şeffaflık notu: `03_..._v1` defterinde B0 v3'ün test sonucu görülmüştür; son CNN'in seçimi ve ayarları (v2) yalnızca doğrulamaya dayanır.
 - Çıktılar (grafikler, tablolar) defterlerin içinde kayıtlıdır; öne çıkan grafikler `../results/` altındadır.
