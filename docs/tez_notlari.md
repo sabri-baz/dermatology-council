@@ -90,3 +90,20 @@ Dermatoskop kenar şeridi görüntü alanının %35'ini kaplamaktadır; ısı ha
 - Basit "güven + uyumsuzluk" kuralı bulanık kapıyla istatistiksel olarak ayırt edilemiyor; bulanık kapının asıl katkısı açıklanabilirliktir (hangi kuralın ateşlendiği gösterilebilir).
 - Puanların %12'si tavan değerde (sıralanamayan); testte konseye giden oran (%23,6) doğrulamadakinden (%20) yüksektir.
 - Konseye giden vakalar henüz ajanlarca değerlendirilmemiştir; konseyin katkısı sonraki adımlarda ölçülecektir.
+
+## Adım 6: PubMed Literatür Kütüphanesi
+
+### Yöntem
+- Toplama: NCBI E-utilities (`esearch` + `efetch`, Biopython). 9 sorgu (7 tanı sınıfının dermoskopisi, melanomun nevüsten ayrımı, melanom risk faktörleri); her sorgudan en ilgili en fazla 1.000 makale. Ortak filtre: özeti olan, İngilizce, 2000-2025; "deep learning", "neural network" vb. içeren yapay zekâ makaleleri hariç (literatür ajanının ihtiyacı klinik bilgidir, model başarımı tartışması değil). Yıl aralığı, kütüphane yeniden indirilse de aynı kümenin çıkması için sabitlendi.
+- Temizleme: tekilleştirme (PMID), geri çekilmiş makale (1) ve 150 karakterden kısa özet (3) çıkarıldı. 4.140 tekil makaleden 4.133 indirildi, 4.129 kaldı. Sınıf etiketlerine göre makale sayısı (bir makale birden fazla sınıfta olabilir): melanom 2.859, nevüs 1.848, BCC 545, aktinik keratoz 315, benign keratoz 260, vasküler 129, dermatofibrom 99.
+- Vektörleme: MedCPT Article Encoder, başlık + özet, en fazla 512 parça, `[CLS]` çıktısı (768 boyut). Makalelerin %5,1'inin özeti kesilir (ortanca uzunluk 313 parça).
+- Arama: FAISS `IndexFlatIP` ile 50 aday, ardından MedCPT Cross-Encoder ile yeniden sıralama.
+
+### Sonuçlar
+- Değerlendirme soruları (7 sınıf x 3 klinik soru = 21) sonuçlara bakılmadan yazıldı. Sınıf isabeti@5 ortalaması: yalnız FAISS 0,952, yeniden sıralamayla 0,971. Sınıf bazında FAISS: benign keratoz 0,87, vasküler 0,80, diğerleri 1,00; yeniden sıralamada nevüs 0,93, benign keratoz 0,87, diğerleri 1,00.
+
+### Sınırlılıklar
+- Gerçek "ilgililik" etiketi yoktur. Ölçüt, makalenin o sınıfın sorgusuyla toplanmış olmasına dayanan kaba bir vekildir; sınıf etiketi taşımayan makale de konuyla ilgili olabilir (ör. melanomu taklit eden dermatofibrom), bu yüzden örnek sonuçlar ayrıca gözle incelendi.
+- Yalnızca özetler kullanılır (tam metin yok); nadir sınıflarda (dermatofibrom 99, vasküler 129 makale) kütüphane küçüktür.
+- Yalnızca 21 soruyla yapılan değerlendirme küçüktür; sınıf bazlı farklar (ör. vasküler 0,80 ile 1,00) dalgalanma içerebilir.
+- Literatür ajanının cevap kalitesi henüz ölçülmemiştir (Adım 7).
