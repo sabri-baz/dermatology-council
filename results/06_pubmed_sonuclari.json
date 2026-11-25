@@ -1,0 +1,273 @@
+{
+  "ayarlar": {
+    "yil_araligi": [
+      2000,
+      2025
+    ],
+    "sorgu_basina": 1000,
+    "en_kisa_ozet": 150,
+    "ortak_filtre": "hasabstract[text] AND english[la] AND (\"2000\"[dp] : \"2025\"[dp]) NOT (\"deep learning\"[tiab] OR \"machine learning\"[tiab] OR \"neural network\"[tiab] OR \"artificial intelligence\"[tiab] OR \"convolutional\"[tiab] OR \"computer-aided\"[tiab])",
+    "toplama_sorgulari": {
+      "melanom": {
+        "sorgu": "melanoma[tiab] AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "mel"
+        ]
+      },
+      "nevus": {
+        "sorgu": "(nevus[tiab] OR nevi[tiab] OR naevus[tiab] OR naevi[tiab]) AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "nv"
+        ]
+      },
+      "melanom_nevus": {
+        "sorgu": "melanoma[tiab] AND (nevus[tiab] OR nevi[tiab] OR naevi[tiab]) AND (differential[tiab] OR distinguish*[tiab] OR discriminat*[tiab] OR mimic*[tiab])",
+        "siniflar": [
+          "mel",
+          "nv"
+        ]
+      },
+      "bcc": {
+        "sorgu": "\"basal cell carcinoma\"[tiab] AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "bcc"
+        ]
+      },
+      "akiec": {
+        "sorgu": "(\"actinic keratosis\"[tiab] OR \"actinic keratoses\"[tiab] OR \"Bowen disease\"[tiab] OR \"Bowen's disease\"[tiab] OR \"intraepidermal carcinoma\"[tiab] OR \"squamous cell carcinoma in situ\"[tiab]) AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "akiec"
+        ]
+      },
+      "bkl": {
+        "sorgu": "(\"seborrheic keratosis\"[tiab] OR \"seborrhoeic keratosis\"[tiab] OR \"seborrheic keratoses\"[tiab] OR \"solar lentigo\"[tiab] OR \"lichen planus-like keratosis\"[tiab]) AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "bkl"
+        ]
+      },
+      "df": {
+        "sorgu": "(dermatofibroma[tiab] OR dermatofibromas[tiab] OR \"fibrous histiocytoma\"[tiab]) AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "df"
+        ]
+      },
+      "vasc": {
+        "sorgu": "(hemangioma[tiab] OR haemangioma[tiab] OR angiokeratoma[tiab] OR \"pyogenic granuloma\"[tiab] OR \"cherry angioma\"[tiab] OR \"vascular lesion\"[tiab] OR \"vascular lesions\"[tiab]) AND (dermoscopy[tiab] OR dermoscopic[tiab] OR dermatoscopy[tiab] OR dermatoscopic[tiab] OR epiluminescence[tiab])",
+        "siniflar": [
+          "vasc"
+        ]
+      },
+      "melanom_risk": {
+        "sorgu": "melanoma[tiab] AND (\"risk factor\"[tiab] OR \"risk factors\"[tiab]) AND (age[tiab] OR \"anatomic site\"[tiab] OR \"body site\"[tiab] OR sex[tiab])",
+        "siniflar": [
+          "mel"
+        ]
+      }
+    },
+    "makale_modeli": "ncbi/MedCPT-Article-Encoder",
+    "sorgu_modeli": "ncbi/MedCPT-Query-Encoder",
+    "capraz_model": "ncbi/MedCPT-Cross-Encoder",
+    "indeks": "IndexFlatIP (MedCPT iç çarpım)",
+    "makale_sayisi": 4129,
+    "vektor_boyutu": 768,
+    "indirme_tarihi": "2026-11-25"
+  },
+  "sorgu_ozeti": [
+    {
+      "sorgu": "melanom",
+      "siniflar": "mel",
+      "pubmed_toplam": 1968,
+      "alinan": 1000
+    },
+    {
+      "sorgu": "nevus",
+      "siniflar": "nv",
+      "pubmed_toplam": 1167,
+      "alinan": 1000
+    },
+    {
+      "sorgu": "melanom_nevus",
+      "siniflar": "mel,nv",
+      "pubmed_toplam": 1165,
+      "alinan": 1000
+    },
+    {
+      "sorgu": "bcc",
+      "siniflar": "bcc",
+      "pubmed_toplam": 547,
+      "alinan": 547
+    },
+    {
+      "sorgu": "akiec",
+      "siniflar": "akiec",
+      "pubmed_toplam": 315,
+      "alinan": 315
+    },
+    {
+      "sorgu": "bkl",
+      "siniflar": "bkl",
+      "pubmed_toplam": 261,
+      "alinan": 261
+    },
+    {
+      "sorgu": "df",
+      "siniflar": "df",
+      "pubmed_toplam": 99,
+      "alinan": 99
+    },
+    {
+      "sorgu": "vasc",
+      "siniflar": "vasc",
+      "pubmed_toplam": 129,
+      "alinan": 129
+    },
+    {
+      "sorgu": "melanom_risk",
+      "siniflar": "mel",
+      "pubmed_toplam": 1459,
+      "alinan": 1000
+    }
+  ],
+  "sinif_sayisi": {
+    "akiec": 315,
+    "bcc": 545,
+    "bkl": 260,
+    "df": 99,
+    "mel": 2859,
+    "nv": 1848,
+    "vasc": 129
+  },
+  "kesilen_makale_orani": 0.0506175829498668,
+  "degerlendirme": [
+    {
+      "sinif": "mel",
+      "soru": "dermoscopic features of melanoma such as atypical pigment network and blue-white veil",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "mel",
+      "soru": "how to differentiate early melanoma from atypical nevus with dermoscopy",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "mel",
+      "soru": "regression structures and irregular streaks in thin melanoma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "nv",
+      "soru": "dermoscopic patterns of benign melanocytic nevi",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "nv",
+      "soru": "reticular and globular patterns in common acquired nevi",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "nv",
+      "soru": "changes of melanocytic nevi during digital dermoscopic follow-up",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 0.8
+    },
+    {
+      "sinif": "bcc",
+      "soru": "arborizing vessels and blue-gray ovoid nests in basal cell carcinoma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "bcc",
+      "soru": "dermoscopy of pigmented basal cell carcinoma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "bcc",
+      "soru": "dermoscopic criteria of superficial basal cell carcinoma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "akiec",
+      "soru": "strawberry pattern in actinic keratosis dermoscopy",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "akiec",
+      "soru": "glomerular vessels in Bowen disease",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "akiec",
+      "soru": "dermoscopic progression from actinic keratosis to squamous cell carcinoma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "bkl",
+      "soru": "milia-like cysts and comedo-like openings in seborrheic keratosis",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "bkl",
+      "soru": "dermoscopic differentiation of solar lentigo and lentigo maligna",
+      "faiss@5": 0.8,
+      "yeniden_siralama@5": 0.8
+    },
+    {
+      "sinif": "bkl",
+      "soru": "lichen planus-like keratosis dermoscopic features",
+      "faiss@5": 0.8,
+      "yeniden_siralama@5": 0.8
+    },
+    {
+      "sinif": "df",
+      "soru": "central white patch and peripheral pigment network in dermatofibroma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "df",
+      "soru": "dermoscopic patterns of dermatofibroma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "df",
+      "soru": "atypical dermatofibroma mimicking melanoma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "vasc",
+      "soru": "red lacunae in hemangioma on dermoscopy",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "vasc",
+      "soru": "dermoscopic features of angiokeratoma",
+      "faiss@5": 0.4,
+      "yeniden_siralama@5": 1.0
+    },
+    {
+      "sinif": "vasc",
+      "soru": "dermoscopy of pyogenic granuloma",
+      "faiss@5": 1.0,
+      "yeniden_siralama@5": 1.0
+    }
+  ],
+  "ortalama_isabet": {
+    "faiss@5": 0.9523809523809523,
+    "yeniden_siralama@5": 0.9714285714285713
+  }
+}

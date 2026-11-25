@@ -1,0 +1,282 @@
+{
+  "ayarlar": {
+    "yuzdelikler": {
+      "guven": [
+        0.2928030649050763,
+        0.9396284289977281,
+        0.9993900020270312
+      ],
+      "uyum": [
+        0.28102283436306835,
+        0.8915645971485817,
+        0.9999999064765739
+      ],
+      "risk": [
+        0.00013522026229642332,
+        0.09918195445280381,
+        0.9295633498454668
+      ]
+    },
+    "yas_kumeleri": {
+      "genc": [
+        0,
+        0,
+        35,
+        50
+      ],
+      "ileri": [
+        35,
+        50,
+        150,
+        150
+      ]
+    },
+    "cikis_kumeleri": {
+      "dusuk": [
+        0,
+        0,
+        0,
+        50
+      ],
+      "orta": [
+        25,
+        50,
+        50,
+        75
+      ],
+      "yuksek": [
+        50,
+        100,
+        100,
+        100
+      ]
+    },
+    "kurallar": [
+      [
+        "K1",
+        "güven DÜŞÜK ise konsey YÜKSEK",
+        "yuksek"
+      ],
+      [
+        "K2",
+        "uyum DÜŞÜK ise konsey YÜKSEK",
+        "yuksek"
+      ],
+      [
+        "K3",
+        "güven YÜKSEK ve uyum YÜKSEK ve risk DÜŞÜK ise konsey DÜŞÜK",
+        "dusuk"
+      ],
+      [
+        "K4",
+        "güven YÜKSEK ve uyum YÜKSEK ve risk ORTA ise konsey DÜŞÜK",
+        "dusuk"
+      ],
+      [
+        "K5",
+        "güven YÜKSEK ve uyum YÜKSEK ve risk YÜKSEK ise konsey ORTA",
+        "orta"
+      ],
+      [
+        "K6",
+        "güven ORTA ve uyum YÜKSEK ve risk DÜŞÜK ise konsey DÜŞÜK",
+        "dusuk"
+      ],
+      [
+        "K7",
+        "güven ORTA ve uyum YÜKSEK ve risk (ORTA veya YÜKSEK) ise konsey ORTA",
+        "orta"
+      ],
+      [
+        "K8",
+        "güven YÜKSEK ve uyum ORTA ve risk DÜŞÜK ise konsey DÜŞÜK",
+        "dusuk"
+      ],
+      [
+        "K9",
+        "güven YÜKSEK ve uyum ORTA ve risk (ORTA veya YÜKSEK) ise konsey ORTA",
+        "orta"
+      ],
+      [
+        "K10",
+        "güven ORTA ve uyum ORTA ve risk DÜŞÜK ise konsey ORTA",
+        "orta"
+      ],
+      [
+        "K11",
+        "güven ORTA ve uyum ORTA ve risk (ORTA veya YÜKSEK) ise konsey YÜKSEK",
+        "yuksek"
+      ],
+      [
+        "K12",
+        "yaş İLERİ ve risk YÜKSEK ve DEĞİL(güven YÜKSEK ve uyum YÜKSEK) ise konsey YÜKSEK",
+        "yuksek"
+      ]
+    ],
+    "esik": 83.10813433309153,
+    "konsey_butcesi": 0.2,
+    "girdi_tanimlari": {
+      "guven": "kalibre CNN olasılığı, CNN klinik kararı için",
+      "uyum": "arşiv olasılığı, CNN klinik kararı için",
+      "risk": "0,5 × (CNN + arşiv) kötü huylu (mel+bcc+akiec) olasılığı",
+      "yas": "hasta yaşı; bilinmiyorsa genç ve ileri üyeliği 0,5"
+    },
+    "cikarim": "Mamdani; VE=min, VEYA=max, DEĞİL=1-µ; max birleştirme; ağırlık merkezi"
+  },
+  "n_konsey": {
+    "dogrulama": 293,
+    "test": 353
+  },
+  "karsilastirma": {
+    "dogrulama": [
+      {
+        "yontem": "yalnız güven",
+        "konsey_orani": 0.20013661202185792,
+        "dogruluk": 0.9137489325362937,
+        "dengeli_dogruluk": 0.8152933482209798,
+        "kacirilan_melanom": 15.0,
+        "yanlis_alarm_nevus": 26.0
+      },
+      {
+        "yontem": "güven + uyumsuzluk",
+        "konsey_orani": 0.20013661202185792,
+        "dogruluk": 0.8915456874466268,
+        "dengeli_dogruluk": 0.8504284668911465,
+        "kacirilan_melanom": 13.0,
+        "yanlis_alarm_nevus": 45.0
+      },
+      {
+        "yontem": "bulanık kapı",
+        "konsey_orani": 0.20013661202185792,
+        "dogruluk": 0.8804440649017934,
+        "dengeli_dogruluk": 0.8218199124682177,
+        "kacirilan_melanom": 16.0,
+        "yanlis_alarm_nevus": 50.0
+      },
+      {
+        "yontem": "bulanık, arşivsiz",
+        "konsey_orani": 0.20013661202185792,
+        "dogruluk": 0.910333048676345,
+        "dengeli_dogruluk": 0.8096910019508855,
+        "kacirilan_melanom": 18.0,
+        "yanlis_alarm_nevus": 26.0
+      },
+      {
+        "yontem": "bulanık, yaş kuralsız",
+        "konsey_orani": 0.20013661202185792,
+        "dogruluk": 0.8872758326216909,
+        "dengeli_dogruluk": 0.8470651887860525,
+        "kacirilan_melanom": 14.0,
+        "yanlis_alarm_nevus": 47.0
+      }
+    ],
+    "test": [
+      {
+        "yontem": "yalnız güven",
+        "konsey_orani": 0.23580494321977288,
+        "dogruluk": 0.8898601398601399,
+        "dengeli_dogruluk": 0.7783150201159018,
+        "kacirilan_melanom": 16.0,
+        "yanlis_alarm_nevus": 28.0
+      },
+      {
+        "yontem": "güven + uyumsuzluk",
+        "konsey_orani": 0.23580494321977288,
+        "dogruluk": 0.8732517482517482,
+        "dengeli_dogruluk": 0.8676240405044939,
+        "kacirilan_melanom": 11.0,
+        "yanlis_alarm_nevus": 57.0
+      },
+      {
+        "yontem": "bulanık kapı",
+        "konsey_orani": 0.23580494321977288,
+        "dogruluk": 0.8592657342657343,
+        "dengeli_dogruluk": 0.8483426044401653,
+        "kacirilan_melanom": 12.0,
+        "yanlis_alarm_nevus": 63.0
+      },
+      {
+        "yontem": "bulanık, arşivsiz",
+        "konsey_orani": 0.23580494321977288,
+        "dogruluk": 0.8863636363636364,
+        "dengeli_dogruluk": 0.7664332683867813,
+        "kacirilan_melanom": 17.0,
+        "yanlis_alarm_nevus": 28.0
+      },
+      {
+        "yontem": "bulanık, yaş kuralsız",
+        "konsey_orani": 0.23580494321977288,
+        "dogruluk": 0.8636363636363636,
+        "dengeli_dogruluk": 0.8573639194127045,
+        "kacirilan_melanom": 12.0,
+        "yanlis_alarm_nevus": 60.0
+      }
+    ]
+  },
+  "bootstrap_farklar": {
+    "yalnız güven | dengeli_dogruluk": [
+      0.07002758432426348,
+      0.020507022026108396,
+      0.12356012039654396
+    ],
+    "yalnız güven | dogruluk": [
+      -0.030594405594405627,
+      -0.049474970295203445,
+      -0.012614618408836669
+    ],
+    "yalnız güven | kacirilan_melanom": [
+      -4.0,
+      -9.0,
+      0.0
+    ],
+    "güven + uyumsuzluk | dengeli_dogruluk": [
+      -0.01928143606432864,
+      -0.06058294196997693,
+      0.019117133497826976
+    ],
+    "güven + uyumsuzluk | dogruluk": [
+      -0.013986013986013957,
+      -0.024789964233256304,
+      -0.003915973739511467
+    ],
+    "güven + uyumsuzluk | kacirilan_melanom": [
+      1.0,
+      0.0,
+      3.0
+    ]
+  },
+  "konsey_icerigi": {
+    "yalnız güven (dogrulama)": {
+      "konseye_giden": 293.0,
+      "konseydekilerde_CNN_dogrulugu": 0.33447098976109213,
+      "CNN_hatalarinin_yakalanan_payi": 0.6587837837837838,
+      "kacan_melanomlarin_yakalanan_payi": 0.4827586206896552,
+      "yanlis_alarmlarin_yakalanan_payi": 0.8015267175572519,
+      "konseydeki_patoloji_dogrulamali_payi": 0.8873720136518771
+    },
+    "bulanık kapı (dogrulama)": {
+      "konseye_giden": 293.0,
+      "konseydekilerde_CNN_dogrulugu": 0.46757679180887374,
+      "CNN_hatalarinin_yakalanan_payi": 0.527027027027027,
+      "kacan_melanomlarin_yakalanan_payi": 0.4482758620689655,
+      "yanlis_alarmlarin_yakalanan_payi": 0.6183206106870229,
+      "konseydeki_patoloji_dogrulamali_payi": 0.8907849829351536
+    },
+    "yalnız güven (test)": {
+      "konseye_giden": 353.0,
+      "konseydekilerde_CNN_dogrulugu": 0.26062322946175637,
+      "CNN_hatalarinin_yakalanan_payi": 0.6744186046511628,
+      "kacan_melanomlarin_yakalanan_payi": 0.2727272727272727,
+      "yanlis_alarmlarin_yakalanan_payi": 0.834319526627219,
+      "konseydeki_patoloji_dogrulamali_payi": 0.8640226628895185
+    },
+    "bulanık kapı (test)": {
+      "konseye_giden": 353.0,
+      "konseydekilerde_CNN_dogrulugu": 0.3597733711048159,
+      "CNN_hatalarinin_yakalanan_payi": 0.5839793281653747,
+      "kacan_melanomlarin_yakalanan_payi": 0.45454545454545453,
+      "yanlis_alarmlarin_yakalanan_payi": 0.6272189349112426,
+      "konseydeki_patoloji_dogrulamali_payi": 0.8470254957507082
+    }
+  }
+}

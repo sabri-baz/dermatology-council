@@ -132,6 +132,8 @@ k ve oylama türü yalnızca doğrulamada seçildi: **k = 50, dengeli oy** (deng
 
 CNN ile arşiv testte vakaların %86,4'ünde aynı tanıyı söyler. Uyumlu vakalarda CNN doğruluğu 0,802, uyumsuz vakalarda 0,358'dir; yani uyumsuzluk "konsey toplansın" sinyali taşır. CNN'in yanlış, arşivin doğru olduğu **kurtarılabilir hata** sayısı testte 91'dir.
 
+Sonuçlar: [`results/04_arsiv_sonuclari.json`](results/04_arsiv_sonuclari.json) · [t-SNE](results/04_gomme_tsne.png) · benzer vaka örnekleri: [1](results/04_benzer_vaka_ornek_1.png), [2](results/04_benzer_vaka_ornek_2.png), [3](results/04_benzer_vaka_ornek_3.png), [4](results/04_benzer_vaka_ornek_4.png)
+
 ## Sonuçlar: Adım 5 (Bulanık Mantık Kapısı)
 
 Her vaka için 0-100 arası bir **konsey gerekliliği puanı** üretilir. Girdiler: güven (kalibre CNN), uyum (arşivin CNN kararına verdiği olasılık), risk (kötü huylu sınıfların olasılığı) ve yaş. Mamdani çıkarımı ve 12 Türkçe kural kullanılır; üyelik kümeleri doğrulama dağılımının %5/%50/%95 yüzdeliklerinden kurulur, etiket bilgisi kullanılmaz. Kendi çıkarım kodu `scikit-fuzzy` ile doğrulandı (en büyük fark 0,25 puan). Eşik, doğrulama puanlarının %80. yüzdeliğidir (83,11).
@@ -149,6 +151,8 @@ Test kümesinde aynı sayıda (353 vaka, %23,6) vakayı uzmana gönderen yöntem
 
 Eşleştirilmiş, lezyon bazlı bootstrap (1.000 tekrar): bulanık kapı "yalnız güven"e göre dengeli doğrulukta belirgin biçimde iyidir (+0,070; %95 GA +0,021 / +0,124), ancak "güven + uyumsuzluk" kuralına göre fark belirgin değildir (-0,019; GA -0,061 / +0,019). Arşiv bilgisi çıkarıldığında (arşivsiz) dengeli doğruluk 0,848'den 0,766'ya düşer; yani arşivin katkısı belirgindir. Her karar için hangi kuralların ateşlendiği gösterilebilir (açıklanabilirlik).
 
+Sonuçlar: [`results/05_bulanik_kapi_sonuclari.json`](results/05_bulanik_kapi_sonuclari.json) · [üyelik fonksiyonları](results/05_uyelik_fonksiyonlari.png) · [kontrol yüzeyi](results/05_kontrol_yuzeyi.png) · [karşılaştırma eğrileri](results/05_karsilastirma_egrileri.png) · Kod: [`src/bulanik_kapi.py`](src/bulanik_kapi.py)
+
 > **Not:** Bu aşamada konseye giden vakalar henüz değerlendirilmemiştir; o iş ajanların olacak. Ölçütler sistemin kendi karar verdiği vakalarda hesaplanır.
 
 ## Sonuçlar: Adım 6 (PubMed Literatür Kütüphanesi)
@@ -162,7 +166,7 @@ Değerlendirme: her sınıf için sonuçlara bakılmadan önce yazılmış 3 kli
 | Yalnız FAISS (sorgu kodlayıcı) | 0,952 |
 | FAISS + çapraz kodlayıcı ile yeniden sıralama | **0,971** |
 
-Zayıf noktalar: benign keratoz (0,87) ve, yalnız FAISS'te, vasküler lezyon (0,80; yeniden sıralamayla 1,00). Dağılım grafiği: [`results/06_pubmed_dagilim.png`](results/06_pubmed_dagilim.png) · Sonuçlar: `results/06_pubmed_sonuclari.json`
+Zayıf noktalar: benign keratoz (0,87) ve, yalnız FAISS'te, vasküler lezyon (0,80; yeniden sıralamayla 1,00). Dağılım grafiği: [`results/06_pubmed_dagilim.png`](results/06_pubmed_dagilim.png) · Sonuçlar: [`results/06_pubmed_sonuclari.json`](results/06_pubmed_sonuclari.json) · Arama kodu: [`src/pubmed_arama.py`](src/pubmed_arama.py)
 
 ## Kullanılan Teknolojiler
 
@@ -180,7 +184,7 @@ Zayıf noktalar: benign keratoz (0,87) ve, yalnız FAISS'te, vasküler lezyon (0
 
 ```
 notebooks/   Colab defterleri (NN_konu_vX.ipynb; v3 için _b0 ve _b3 çalıştırmaları ayrı defterlerdir; ayrıntı için notebooks/README.md)
-src/         Tekrar kullanılan Python kodları (bulanik_kapi.py: Adım 5 kapı modülü, pubmed_arama.py: Adım 6 arama modülü; henüz repoya eklenmedi, Drive'daki src/ klasöründe)
+src/         Tekrar kullanılan Python kodları (`bulanik_kapi.py`: Adım 5 kapı modülü, `pubmed_arama.py`: Adım 6 arama modülü)
 results/     Küçük sonuç tabloları, dondurulmuş ayar dosyaları (.json) ve grafikler
 docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 ```

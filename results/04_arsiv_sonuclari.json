@@ -1,0 +1,303 @@
+{
+  "ayarlar": {
+    "son_cnn": "Topluluk + TTA",
+    "uyeler": [
+      "cnn_b0_v3",
+      "cnn_b3_v3"
+    ],
+    "tta": true,
+    "katman": "gap",
+    "gomme_boyutu": 2816,
+    "birlestirme": "üye başına L2 normalize, birleştir, / sqrt(üye sayısı)",
+    "indeks": "IndexFlatIP (kosinüs)",
+    "arsiv": "egitim",
+    "arsiv_boyutu": 7054,
+    "k": 50,
+    "oy": "dengeli",
+    "k_goster": 5,
+    "arsiv_siklik": [
+      0.033030904451375104,
+      0.0517436915225404,
+      0.10986674227388715,
+      0.010774028919761838,
+      0.11015026935072299,
+      0.6705415367167564,
+      0.013892826764956054
+    ],
+    "secim_kurali": "en yüksek doğrulama dengeli doğruluğu; 0,01 içinde ise en küçük k"
+  },
+  "k_secim_tablosu": [
+    {
+      "k": 5,
+      "oy": "ham",
+      "dengeli_dogruluk": 0.6843721957185475,
+      "dogruluk": 0.8449453551912568,
+      "makro_f1": 0.7117427158363903,
+      "melanom_duy": 0.5654761904761905,
+      "nevus_duy": 0.9538461538461539,
+      "ayni_sinif_payi@k": 0.8109289617486338
+    },
+    {
+      "k": 5,
+      "oy": "dengeli",
+      "dengeli_dogruluk": 0.7189019669427527,
+      "dogruluk": 0.7691256830601093,
+      "makro_f1": 0.6713145263148446,
+      "melanom_duy": 0.7083333333333334,
+      "nevus_duy": 0.8,
+      "ayni_sinif_payi@k": 0.8109289617486338
+    },
+    {
+      "k": 10,
+      "oy": "ham",
+      "dengeli_dogruluk": 0.698956814829297,
+      "dogruluk": 0.8483606557377049,
+      "makro_f1": 0.7356529165257425,
+      "melanom_duy": 0.5416666666666666,
+      "nevus_duy": 0.9548717948717949,
+      "ayni_sinif_payi@k": 0.8065573770491803
+    },
+    {
+      "k": 10,
+      "oy": "dengeli",
+      "dengeli_dogruluk": 0.7523913784326066,
+      "dogruluk": 0.7923497267759563,
+      "makro_f1": 0.6896032984936292,
+      "melanom_duy": 0.7083333333333334,
+      "nevus_duy": 0.8297435897435897,
+      "ayni_sinif_payi@k": 0.8065573770491803
+    },
+    {
+      "k": 20,
+      "oy": "ham",
+      "dengeli_dogruluk": 0.6910223848005682,
+      "dogruluk": 0.8510928961748634,
+      "makro_f1": 0.7320595750189944,
+      "melanom_duy": 0.5119047619047619,
+      "nevus_duy": 0.9620512820512821,
+      "ayni_sinif_payi@k": 0.7974043715846995
+    },
+    {
+      "k": 20,
+      "oy": "dengeli",
+      "dengeli_dogruluk": 0.755570252930356,
+      "dogruluk": 0.7739071038251366,
+      "makro_f1": 0.681262414957663,
+      "melanom_duy": 0.7619047619047619,
+      "nevus_duy": 0.7856410256410257,
+      "ayni_sinif_payi@k": 0.7974043715846995
+    },
+    {
+      "k": 50,
+      "oy": "ham",
+      "dengeli_dogruluk": 0.6602402122480843,
+      "dogruluk": 0.8497267759562842,
+      "makro_f1": 0.70623695732091,
+      "melanom_duy": 0.5,
+      "nevus_duy": 0.9702564102564103,
+      "ayni_sinif_payi@k": 0.7824453551912568
+    },
+    {
+      "k": 50,
+      "oy": "dengeli",
+      "dengeli_dogruluk": 0.7820323896093345,
+      "dogruluk": 0.7780054644808743,
+      "makro_f1": 0.6867321054622305,
+      "melanom_duy": 0.7797619047619048,
+      "nevus_duy": 0.7887179487179488,
+      "ayni_sinif_payi@k": 0.7824453551912568
+    }
+  ],
+  "karsilastirma": {
+    "arsiv (dogrulama)": {
+      "dengeli_dogruluk": 0.7820323896093345,
+      "dogruluk": 0.7780054644808743,
+      "makro_f1": 0.6867321054622305,
+      "melanom_duy": 0.7797619047619048,
+      "nevus_duy": 0.7887179487179488,
+      "ayni_sinif_payi@k": 0.7824453551912568
+    },
+    "CNN ayarsız (dogrulama)": {
+      "dengeli_dogruluk": 0.7066486764299854,
+      "dogruluk": 0.8469945355191257,
+      "makro_f1": 0.7272840802018231,
+      "melanom_duy": 0.7023809523809523,
+      "nevus_duy": 0.9128205128205128
+    },
+    "CNN klinik (dogrulama)": {
+      "dengeli_dogruluk": 0.7629731795511415,
+      "dogruluk": 0.7978142076502732,
+      "makro_f1": 0.7149093349124686,
+      "melanom_duy": 0.8273809523809523,
+      "nevus_duy": 0.803076923076923
+    },
+    "arsiv (test)": {
+      "dengeli_dogruluk": 0.7750357634657801,
+      "dogruluk": 0.7535070140280561,
+      "makro_f1": 0.672763943138814,
+      "melanom_duy": 0.8214285714285714,
+      "nevus_duy": 0.748,
+      "ayni_sinif_payi@k": 0.7645958583834336
+    },
+    "CNN ayarsız (test)": {
+      "dengeli_dogruluk": 0.653310477172919,
+      "dogruluk": 0.8209752839011356,
+      "makro_f1": 0.681385390371319,
+      "melanom_duy": 0.7559523809523809,
+      "nevus_duy": 0.887
+    },
+    "CNN klinik (test)": {
+      "dengeli_dogruluk": 0.7051600897452206,
+      "dogruluk": 0.7414829659318637,
+      "makro_f1": 0.6454767935152087,
+      "melanom_duy": 0.8690476190476191,
+      "nevus_duy": 0.734
+    }
+  },
+  "uyum": {
+    "dogrulama": {
+      "uyum_orani": 0.8797814207650273,
+      "CNN_dogrulugu_uyumlu": 0.8369565217391305,
+      "CNN_dogrulugu_uyumsuz": 0.5113636363636364,
+      "CNN_yanlis_sayisi": 296.0,
+      "kurtarilabilir_hata (CNN yanlış, arşiv doğru)": 61.0,
+      "kaçan melanom (CNN)": 29.0,
+      "bunlardan arşivin melanom dediği": 7.0,
+      "yanlış alarm (nevüse melanom)": 131.0,
+      "bunlardan arşivin nevüs dediği": 22.0
+    },
+    "test": {
+      "uyum_orani": 0.8637274549098196,
+      "CNN_dogrulugu_uyumlu": 0.8020108275328693,
+      "CNN_dogrulugu_uyumsuz": 0.35784313725490197,
+      "CNN_yanlis_sayisi": 387.0,
+      "kurtarilabilir_hata (CNN yanlış, arşiv doğru)": 91.0,
+      "kaçan melanom (CNN)": 22.0,
+      "bunlardan arşivin melanom dediği": 4.0,
+      "yanlış alarm (nevüse melanom)": 169.0,
+      "bunlardan arşivin nevüs dediği": 38.0
+    }
+  },
+  "yonlendirme": {
+    "dogrulama": [
+      {
+        "kapsama": 0.9,
+        "kural": "yalnız güven",
+        "dogruluk": 0.858877086494689,
+        "dengeli_dogruluk": 0.7679786388664658,
+        "kacirilan_melanom": 22
+      },
+      {
+        "kapsama": 0.9,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.8368740515933232,
+        "dengeli_dogruluk": 0.8282184506858158,
+        "kacirilan_melanom": 21
+      },
+      {
+        "kapsama": 0.88,
+        "kural": "yalnız güven",
+        "dogruluk": 0.8695652173913043,
+        "dengeli_dogruluk": 0.7782903329224518,
+        "kacirilan_melanom": 21
+      },
+      {
+        "kapsama": 0.88,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.8369565217391305,
+        "dengeli_dogruluk": 0.8409659706101033,
+        "kacirilan_melanom": 19
+      },
+      {
+        "kapsama": 0.8,
+        "kural": "yalnız güven",
+        "dogruluk": 0.9137489325362937,
+        "dengeli_dogruluk": 0.8152933482209798,
+        "kacirilan_melanom": 15
+      },
+      {
+        "kapsama": 0.8,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.8915456874466268,
+        "dengeli_dogruluk": 0.8504284668911465,
+        "kacirilan_melanom": 13
+      },
+      {
+        "kapsama": 0.7,
+        "kural": "yalnız güven",
+        "dogruluk": 0.9639024390243902,
+        "dengeli_dogruluk": 0.8881686410509081,
+        "kacirilan_melanom": 11
+      },
+      {
+        "kapsama": 0.7,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.9521951219512195,
+        "dengeli_dogruluk": 0.8889299256334678,
+        "kacirilan_melanom": 10
+      }
+    ],
+    "test": [
+      {
+        "kapsama": 0.9,
+        "kural": "yalnız güven",
+        "dogruluk": 0.8040089086859689,
+        "dengeli_dogruluk": 0.7162592083013719,
+        "kacirilan_melanom": 19
+      },
+      {
+        "kapsama": 0.9,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.7980697847067557,
+        "dengeli_dogruluk": 0.7867742552129771,
+        "kacirilan_melanom": 15
+      },
+      {
+        "kapsama": 0.864,
+        "kural": "yalnız güven",
+        "dogruluk": 0.8290796597061099,
+        "dengeli_dogruluk": 0.736815223923195,
+        "kacirilan_melanom": 18
+      },
+      {
+        "kapsama": 0.864,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.8020108275328693,
+        "dengeli_dogruluk": 0.8320076631555288,
+        "kacirilan_melanom": 14
+      },
+      {
+        "kapsama": 0.8,
+        "kural": "yalnız güven",
+        "dogruluk": 0.8706176961602671,
+        "dengeli_dogruluk": 0.75131871770492,
+        "kacirilan_melanom": 18
+      },
+      {
+        "kapsama": 0.8,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.8480801335559266,
+        "dengeli_dogruluk": 0.8630501643673906,
+        "kacirilan_melanom": 12
+      },
+      {
+        "kapsama": 0.7,
+        "kural": "yalnız güven",
+        "dogruluk": 0.9255725190839694,
+        "dengeli_dogruluk": 0.8056160570463059,
+        "kacirilan_melanom": 11
+      },
+      {
+        "kapsama": 0.7,
+        "kural": "güven + uyumsuzluk",
+        "dogruluk": 0.9150763358778626,
+        "dengeli_dogruluk": 0.8801354865535668,
+        "kacirilan_melanom": 10
+      }
+    ]
+  },
+  "en_yakin_benzerlik_ortanca": {
+    "dogrulama": 0.8192239999771118,
+    "test": 0.819262683391571
+  }
+}
