@@ -112,7 +112,43 @@ Eğitilmiş modeller (`.keras`, 80-215 MB) ve logit dosyaları (`.npy`) boyut ne
 |---|---|
 | `cnn_b0_v3.keras`, `cnn_b3_v3.keras` | Son topluluğun üyeleri |
 | `cnn_b0_v2.keras`, `cnn_b0_v4.keras` | Karşılaştırma modelleri |
-| `son_cnn_dogrulama_logit.npy`, `son_cnn_test_logit.npy` | Son CNN'in ham çıktıları (Adım 8'de bulanık mantık için kullanılacak) |
+| `son_cnn_dogrulama_logit.npy`, `son_cnn_test_logit.npy` | Son CNN'in ham çıktıları (Adım 5'te bulanık mantık kapısı için kullanıldı) |
+| `rag/` (`arsiv.faiss`, `arsiv_meta.csv`, `gomme_*.npy`, `komsular_*.npz`, `arsiv_olasilik_*.npy`, `04_arsiv_ayarlari.json`) | Adım 4: benzer vaka arşivi, gömmeler ve arşiv olasılıkları |
+| `bulanik/` (`05_kapi_ayarlari.json`, `kapi_skoru_*.npy`) | Adım 5: dondurulmuş kapı ayarları ve vaka puanları |
+
+## Sonuçlar: Adım 4 (Benzer Vaka Arşivi)
+
+Dondurulmuş son CNN'in `gap` katmanı her görüntü için gömme vektörü üretir (B0 1.280 + B3 1.536 = 2.816 boyut, 8 yönlü TTA ortalaması). **Arşiv yalnızca eğitim kümesidir** (7.054 görüntü); doğrulama ve test görüntüleri arşivde aranır, arşive eklenmez. Arama FAISS `IndexFlatIP` (kosinüs benzerliği) ile yapılır. Gömmelerden hesaplanan logitler Adım 3 logitleriyle birebir tutarlıdır (fark 0,0000). Aramada sızıntı yoktur ve 0,98 üstü benzerlikte "neredeyse kopya" sorgu yoktur.
+
+k ve oylama türü yalnızca doğrulamada seçildi: **k = 50, dengeli oy** (dengeli doğruluk 0,782).
+
+| Test kümesi | Arşiv tek başına (k-en yakın komşu) | CNN ayarsız | CNN klinik eşikli |
+|---|---|---|---|
+| Doğruluk | 0,754 | 0,821 | 0,741 |
+| Dengeli doğruluk | 0,775 | 0,653 | 0,705 |
+| Melanom duyarlılığı | 0,821 | 0,756 | 0,869 |
+| Nevüs duyarlılığı | 0,748 | 0,887 | 0,734 |
+
+CNN ile arşiv testte vakaların %86,4'ünde aynı tanıyı söyler. Uyumlu vakalarda CNN doğruluğu 0,802, uyumsuz vakalarda 0,358'dir; yani uyumsuzluk "konsey toplansın" sinyali taşır. CNN'in yanlış, arşivin doğru olduğu **kurtarılabilir hata** sayısı testte 91'dir.
+
+## Sonuçlar: Adım 5 (Bulanık Mantık Kapısı)
+
+Her vaka için 0-100 arası bir **konsey gerekliliği puanı** üretilir. Girdiler: güven (kalibre CNN), uyum (arşivin CNN kararına verdiği olasılık), risk (kötü huylu sınıfların olasılığı) ve yaş. Mamdani çıkarımı ve 12 Türkçe kural kullanılır; üyelik kümeleri doğrulama dağılımının %5/%50/%95 yüzdeliklerinden kurulur, etiket bilgisi kullanılmaz. Kendi çıkarım kodu `scikit-fuzzy` ile doğrulandı (en büyük fark 0,25 puan). Eşik, doğrulama puanlarının %80. yüzdeliğidir (83,11).
+
+Test kümesinde aynı sayıda (353 vaka, %23,6) vakayı uzmana gönderen yöntemlerin karşılaştırması:
+
+| Yöntem | Doğruluk | Dengeli doğruluk | Kaçırılan melanom | Yanlış alarm (nevüs) |
+|---|---|---|---|---|
+| Hiç konsey yok | - | 0,705 | 22 | 169 |
+| Yalnız güven | 0,890 | 0,778 | 16 | 28 |
+| Güven + uyumsuzluk | 0,873 | 0,868 | 11 | 57 |
+| **Bulanık kapı** | 0,859 | 0,848 | 12 | 63 |
+| Bulanık, arşivsiz | 0,886 | 0,766 | 17 | 28 |
+| Bulanık, yaş kuralsız | 0,864 | 0,857 | 12 | 60 |
+
+Eşleştirilmiş, lezyon bazlı bootstrap (1.000 tekrar): bulanık kapı "yalnız güven"e göre dengeli doğrulukta belirgin biçimde iyidir (+0,070; %95 GA +0,021 / +0,124), ancak "güven + uyumsuzluk" kuralına göre fark belirgin değildir (-0,019; GA -0,061 / +0,019). Arşiv bilgisi çıkarıldığında (arşivsiz) dengeli doğruluk 0,848'den 0,766'ya düşer; yani arşivin katkısı belirgindir. Her karar için hangi kuralların ateşlendiği gösterilebilir (açıklanabilirlik).
+
+> **Not:** Bu aşamada konseye giden vakalar henüz değerlendirilmemiştir; o iş ajanların olacak. Ölçütler sistemin kendi karar verdiği vakalarda hesaplanır.
 
 ## Kullanılan Teknolojiler
 
@@ -122,6 +158,7 @@ Eğitilmiş modeller (`.keras`, 80-215 MB) ve logit dosyaları (`.npy`) boyut ne
 | Görüntü sınıflandırma | TensorFlow / Keras, EfficientNet, sıcaklık ölçekleme, Grad-CAM |
 | RAG | MedCPT, FAISS, Biopython (PubMed) |
 | Ajanlar | Dil modeli API'si |
+| Benzer vaka arama | FAISS (`IndexFlatIP`, kosinüs benzerliği) |
 | Karar modülü | scikit-fuzzy (bulanık mantık) |
 | Arayüz | Gradio, Hugging Face Spaces |
 
@@ -129,7 +166,7 @@ Eğitilmiş modeller (`.keras`, 80-215 MB) ve logit dosyaları (`.npy`) boyut ne
 
 ```
 notebooks/   Colab defterleri (NN_konu_vX.ipynb; v3 için _b0 ve _b3 çalıştırmaları ayrı defterlerdir; ayrıntı için notebooks/README.md)
-src/         Tekrar kullanılan Python kodları
+src/         Tekrar kullanılan Python kodları (bulanik_kapi.py: Adım 5 kapı modülü; henüz repoya eklenmedi, Drive'daki src/ klasöründe)
 results/     Küçük sonuç tabloları, dondurulmuş ayar dosyaları (.json) ve grafikler
 docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 ```
@@ -139,15 +176,16 @@ docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 - [x] **Adım 1:** Veri indirme, inceleme ve lezyon bazlı ayrım
 - [x] **Adım 2:** CNN eğitimi (EfficientNet B0/B3, 4 sürüm)
 - [x] **Adım 3:** Kalibrasyon, Grad-CAM, değerlendirme (Deney 1); son CNN: Topluluk + TTA, donduruldu
-- [ ] **Adım 4:** Benzer vaka arşivi (CNN gömmeleri + FAISS)
-- [ ] **Adım 5:** PubMed literatür kütüphanesi (MedCPT + FAISS)
-- [ ] **Adım 6:** Literatür ajanı (Deney 2)
-- [ ] **Adım 7:** Çürütücü ajan
-- [ ] **Adım 8:** Bulanık mantık kapısı ve karar modülü (Deney 3-4)
-- [ ] **Adım 9:** Hakem ajan ve rapor
-- [ ] **Adım 10:** Toplu değerlendirme ve hata analizi
-- [ ] **Adım 11:** Web arayüzü
-- [ ] **Adım 12:** Tez yazımı
+- [x] **Adım 4:** Benzer vaka arşivi (CNN gömmeleri + FAISS)
+- [x] **Adım 5:** Bulanık mantık kapısı ("konsey toplansın mı?"); asgari sürüm (CNN + arşiv + kapı) tamamlandı
+- [ ] **Adım 6:** PubMed literatür kütüphanesi (MedCPT + FAISS)
+- [ ] **Adım 7:** Literatür ajanı (Deney 2)
+- [ ] **Adım 8:** Çürütücü ajan
+- [ ] **Adım 9:** Bulanık mantık karar modülü (Deney 3-4)
+- [ ] **Adım 10:** Hakem ajan ve rapor
+- [ ] **Adım 11:** Toplu değerlendirme ve hata analizi
+- [ ] **Adım 12:** Web arayüzü
+- [ ] **Adım 13:** Tez yazımı
 
 ## Haftalık Günlük
 
@@ -155,6 +193,7 @@ docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 |---|---|---|
 | 1 | Veri indirildi, incelendi, lezyon bazlı ayrım yapıldı; ek kalite kontrolleri (çözünürlük, MD5 kopya, bilinmeyen meta veri) | 10.015 görüntü, 7.470 lezyon; görüntülerin ~%45'i birden fazla fotoğrafı olan lezyonlara ait, bu yüzden lezyon bazlı ayrım zorunlu. Kümeler arası sızıntı yok |
 | 2-3 | CNN eğitimi (4 sürüm, B0 ve B3; v4 v3'ten daha kötü çıktı: 0,658 / 0,695), aday ve topluluk karşılaştırması, sıcaklık ölçekleme, test değerlendirmesi, uzmana yönlendirme analizi, Grad-CAM | Son CNN: Topluluk (B0 v3 + B3 v3) + TTA. Test: doğruluk 0,821, dengeli doğruluk 0,653, melanom duyarlılığı 0,756; klinik eşikle melanom duyarlılığı 0,869. Isı haritalarının kenar payı ortanca %14 |
+| 4-5 | Benzer vaka arşivi (CNN gömmeleri + FAISS, k = 50 dengeli oy); bulanık mantık kapısı (12 kural, Mamdani, scikit-fuzzy ile doğrulandı); temel çizgilerle ve ablasyonla karşılaştırma, bootstrap | Arşiv tek başına test dengeli doğruluğu 0,775; CNN-arşiv uyumsuzluğu hata sinyali (uyumlu 0,802 / uyumsuz 0,358 doğruluk). Kapı, yalnız güvene göre dengeli doğrulukta +0,070 daha iyi (belirgin); arşivsiz hâli 0,766'ya düşer |
 
 ## Kaynaklar
 

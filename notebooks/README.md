@@ -12,12 +12,14 @@ Defterler Google Colab'da çalıştırılır; veri ve modeller Google Drive'da t
 | [`02_cnn_egitimi_v4.ipynb`](02_cnn_egitimi_v4.ipynb) | 2 | Ön işleme tutarlılığı ve eğitim tarifi iyileştirmesi (`cnn_b0_v4`) | Aday |
 | [`03_kalibrasyon_test_gradcam_v1.ipynb`](03_kalibrasyon_test_gradcam_v1.ipynb) | 3 | `cnn_b0_v3` için sıcaklık ölçekleme, test, Grad-CAM | Eski (v2 ile değiştirildi) |
 | [`03_son_cnn_secimi_test_v2.ipynb`](03_son_cnn_secimi_test_v2.ipynb) | 3 | Adayları ve toplulukları doğrulamada karşılaştırır, son CNN'i seçer, kalibre eder, test eder, uzmana yönlendirme ve Grad-CAM | **Final** (seçilen: Topluluk + TTA) |
+| [`04_benzer_vaka_arsivi_v1.ipynb`](04_benzer_vaka_arsivi_v1.ipynb) | 4 | Son CNN'in gömmelerinden FAISS benzer vaka arşivi (yalnız eğitim kümesi), k-en yakın komşu başarısı, CNN-arşiv uyumu, t-SNE | **Final** (k = 50, dengeli oy) |
+| [`05_bulanik_mantik_kapisi_v1.ipynb`](05_bulanik_mantik_kapisi_v1.ipynb) | 5 | 12 kurallı Mamdani bulanık kapı (güven, uyum, risk, yaş), temel çizgi ve ablasyon karşılaştırması, bootstrap, kural bazlı açıklama | **Final** (eşik: doğrulama %80. yüzdelik = 83,11) |
 
 ## Çalıştırma sırası
 
-`01` → `02_*` (v3 B0, v3 B3 ve v4 modelleri gerekli) → `03_son_cnn_secimi_test_v2`. Eski sürümler (v1, v2, `03_..._v1`) tezde "denenen yaklaşımlar" için saklanır; yeniden çalıştırmak gerekmez.
+`01` → `02_*` (v3 B0, v3 B3 ve v4 modelleri gerekli) → `03_son_cnn_secimi_test_v2` → `04_benzer_vaka_arsivi_v1` → `05_bulanik_mantik_kapisi_v1`. Eski sürümler (v1, v2, `03_..._v1`) tezde "denenen yaklaşımlar" için saklanır; yeniden çalıştırmak gerekmez.
 
 ## Notlar
 
-- Test kümesi yalnızca Adım 3'te kullanılmıştır. Şeffaflık notu: `03_..._v1` defterinde B0 v3'ün test sonucu görülmüştür; son CNN'in seçimi ve ayarları (v2) yalnızca doğrulamaya dayanır.
+- Test kümesi Adım 3'te açılmıştır; Adım 4-5'te k, oy türü, üyelik kümeleri ve eşik yalnızca doğrulamada belirlenmiş, test yalnızca raporlama için kullanılmıştır. Şeffaflık notu: `03_..._v1` defterinde B0 v3'ün test sonucu görülmüştür; son CNN'in seçimi ve ayarları (v2) yalnızca doğrulamaya dayanır.
 - Çıktılar (grafikler, tablolar) defterlerin içinde kayıtlıdır; öne çıkan grafikler `../results/` altındadır.

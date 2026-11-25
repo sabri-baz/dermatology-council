@@ -56,3 +56,37 @@ Dermatoskop kenar şeridi görüntü alanının %35'ini kaplamaktadır; ısı ha
 ### Sınırlılıklar
 - Tek bölünme (random_state = 42); farklı bölünmelerle tekrar yapılmamıştır.
 - İyi kalibrasyon yanlış kararların olmadığı anlamına gelmez: klinik eşikte nevüs duyarlılığı 0,734'e düşerek yanlış alarm (169 görüntü) artar. Konsey bu ödünleşimi azaltmak için tasarlanmıştır.
+
+
+## Adım 4: Benzer Vaka Arşivi
+
+### Yöntem
+- Gömme: son CNN'in (B0 v3 + B3 v3, TTA) `gap` katmanı; iki modelin vektörleri ayrı ayrı birim uzunluğa getirilip birleştirilir (2.816 boyut). Tutarlılık kontrolü: gömmelerden hesaplanan logitler Adım 3 logitleriyle aynıdır (fark 0,0000).
+- Arşiv yalnızca eğitim kümesidir (7.054 görüntü); doğrulama/test arşive eklenmez. Böylece aynı lezyonun başka fotoğrafı "benzer vaka" olarak gelmez (sızıntı kontrolü: yok; 0,98 üstü benzerlikte sorgu yok).
+- Arama: FAISS `IndexFlatIP` (tam arama, kosinüs benzerliği). k ve oy türü yalnızca doğrulamada seçildi: k = 50, dengeli oy (sınıf sıklığına bölünmüş oylar).
+
+### Sonuçlar
+- Arşiv tek başına (test): dengeli doğruluk 0,775, doğruluk 0,754, melanom duyarlılığı 0,821, nevüs duyarlılığı 0,748. Dengeli doğrulukta ayarsız CNN'den (0,653) ve klinik eşikli CNN'den (0,705) yüksektir; ham doğrulukta düşüktür.
+- CNN-arşiv uyumu (test): uyum oranı 0,864; CNN doğruluğu uyumlu vakalarda 0,802, uyumsuzlarda 0,358. Kurtarılabilir hata (CNN yanlış, arşiv doğru): 91 / 387 yanlış.
+- Aynı oranda vakayı uzmana göndermede "güven + uyumsuzluk" kuralı, yalnız güvene göre dengeli doğrulukta daha iyi, ham doğrulukta daha düşüktür.
+
+### Sınırlılıklar
+- Arşivin başarısı ağırlıklı olarak CNN gömmelerinin kalitesine bağlıdır; arşiv bağımsız bir bilgi kaynağı değil, aynı modelin temsilidir.
+- Nadir sınıflarda (dermatofibrom, vasküler lezyon: 22'şer görüntü) sonuçlar dalgalıdır; dermatofibrom kesinliği 0,364'tür.
+
+## Adım 5: Bulanık Mantık Kapısı
+
+### Yöntem
+- Çıktı: 0-100 "konsey gerekliliği" puanı. Girdiler: güven, uyum (arşivin CNN kararına olasılığı), risk (melanom + BCC + aktinik keratoz olasılığı, CNN ve arşiv ortalaması), yaş. Etiket bilgisi kullanılmaz.
+- Üyelik kümeleri güven/uyum/risk için doğrulama dağılımının %5/%50/%95 yüzdeliklerinden, yaş için klinik sınırlardan (35 altı genç, 50 üstü ileri) kurulur. 12 kural, Mamdani çıkarımı (VE = min, VEYA = max, ağırlık merkezi). Kendi vektörel kodumuz `scikit-fuzzy` ile 30 vakada karşılaştırıldı: en büyük fark 0,25 puan.
+- Eşik: doğrulama puanlarının %80. yüzdeliği (83,11). Testte aynı eşikle vakaların %23,6'sı konseye gider.
+
+### Sonuçlar (test, aynı sayıda vaka uzmana gönderildiğinde)
+- Dengeli doğruluk: bulanık kapı 0,848; yalnız güven 0,778; güven + uyumsuzluk 0,868; arşivsiz bulanık 0,766. Kaçırılan melanom: 12 / 16 / 11 / 17 (hiç konsey yoksa 22).
+- Bootstrap (lezyon bazlı, 1.000 tekrar): kapı, yalnız güvene göre dengeli doğrulukta belirgin biçimde iyidir (+0,070; %95 GA +0,021 / +0,124) ama doğrulukta belirgin biçimde düşüktür (-0,031). "Güven + uyumsuzluk" kuralına göre fark belirgin değildir (-0,019; GA -0,061 / +0,019).
+- Ablasyon: arşiv bilgisi çıkarılınca dengeli doğruluk 0,848 → 0,766; yaş kuralı (K12) çıkarılınca 0,857 (fark küçük).
+
+### Sınırlılıklar
+- Basit "güven + uyumsuzluk" kuralı bulanık kapıyla istatistiksel olarak ayırt edilemiyor; bulanık kapının asıl katkısı açıklanabilirliktir (hangi kuralın ateşlendiği gösterilebilir).
+- Puanların %12'si tavan değerde (sıralanamayan); testte konseye giden oran (%23,6) doğrulamadakinden (%20) yüksektir.
+- Konseye giden vakalar henüz ajanlarca değerlendirilmemiştir; konseyin katkısı sonraki adımlarda ölçülecektir.
