@@ -1,0 +1,1150 @@
+{
+  "saglayici": "gemini",
+  "model": "gemini-3.5-flash",
+  "sicaklik": 0.0,
+  "n_vaka": 20,
+  "kume": "dogrulama",
+  "sistem_istemi": "Sen bir dermatoloji konseyinde LİTERATÜR AJANISIN. Görevin, bir cilt lezyonu vakası için sana verilen KANIT PAKETİNİ okuyup kaynak gösteren, tarafsız bir kanıt özeti yazmak.\n\nKURALLAR:\n1. Yalnızca paketteki bilgileri kullan. Paket dışı bir makale, PMID ya da vaka uydurma; kendi genel bilgini kaynak gibi sunma.\n2. Lezyonun görüntüsünü GÖRMÜYORSUN. \"Bu lezyonda şu bulgu var/yok\" deme. Makalelerdeki dermoskopik bulguları, uzmanın bakması gereken ölçütler olarak yaz.\n3. Her iddianın sonuna kaynağını köşeli parantezle yaz: benzer vakalar [V1]...[V5], makaleler [M1]...[M6], CNN çıktısı [CNN], hasta bilgisi [HASTA], konsey kapısı [KAPI], arşiv oylaması [ARSIV]. Kaynaksız iddia yazma.\n4. Tarafsız ol. CNN'in kararını savunmak ya da çürütmek senin görevin değil; kanıtın hangi yöne işaret ettiğini dürüstçe bildir. Kanıt zayıf ya da çelişkiliyse bunu açıkça söyle ve \"belirsiz\" de.\n5. Benzer vakaların tanı doğrulama yöntemini dikkate al: patolojiyle doğrulanmış tanı, takip ya da uzman uzlaşısıyla konulan tanıdan daha güçlü kanıttır.\n6. Cevabı yalnızca aşağıdaki JSON biçiminde ve Türkçe ver; JSON dışında hiçbir şey yazma:\n{\"ozet\": \"3-5 cümlelik kanıt özeti, her cümlede kaynak\", \"aday_tanilar\": [{\"sinif\": \"<kod>\", \"lehte\": \"... [Vx][Mx]\", \"aleyhte\": \"... [Mx]\"}], \"en_olasi_tani\": \"<kod>\", \"kanit_yonu\": \"destekliyor | zayiflatiyor | belirsiz\", \"bakilacak_bulgular\": [\"... [Mx]\"]}\n\nSınıf kodları: akiec (aktinik keratoz / Bowen), bcc (bazal hücreli karsinom), bkl (benign keratoz), df (dermatofibrom), mel (melanom), nv (melanositik nevüs), vasc (vasküler lezyon).\n\"kanit_yonu\": kanıtın bütün olarak CNN'in kararını destekleyip desteklemediğidir.",
+  "denetim": {
+    "JSON geçerli": 1.0,
+    "Bütün alanlar tam": 1.0,
+    "En olası tanı geçerli kod": 1.0,
+    "Kanıt yönü geçerli değer": 1.0,
+    "Uydurma kaynak içeren cevap oranı": 0.2,
+    "Toplam uydurma etiket": 4.0,
+    "Özette kaynaksız cümle oranı": 0.012195121951219513,
+    "Cevap başına kullanılan makale (ort.)": 4.45,
+    "Cevap başına kullanılan benzer vaka (ort.)": 4.65
+  },
+  "token": {
+    "girdi_ort": 2141.85,
+    "cikti_ort": 2202.6,
+    "tahmini_buyuk_deney_cagri": 1938
+  },
+  "vakalar": [
+    {
+      "image_id": "ISIC_0027297",
+      "gercek": "bcc",
+      "cnn": "akiec",
+      "arsiv": "bcc",
+      "sorgular": [
+        "dermoscopic criteria to differentiate actinic keratosis or Bowen disease from seborrheic keratosis or solar lentigo",
+        "dermoscopic criteria to differentiate actinic keratosis or Bowen disease from basal cell carcinoma",
+        "dermoscopic criteria to differentiate seborrheic keratosis or solar lentigo from basal cell carcinoma",
+        "dermoscopic features of actinic keratosis or Bowen disease"
+      ],
+      "makale_pmid": [
+        "21175756",
+        "26784739",
+        "28832993",
+        "22534287",
+        "25561209",
+        "22986634"
+      ],
+      "cikti": {
+        "ozet": "Hastanın 70 yaşında erkek olduğu ve lezyonun yüz bölgesinde yer aldığı bildirilmiştir [HASTA]. CNN klinik kararı %23 güvenle akiec yönünde olmasına rağmen, ham olasılıklarda %38 ile bkl ilk sıradadır [CNN]. Düşük güven ve uyumsuzluk nedeniyle konsey kapısı tetiklenmiştir [KAPI]. Arşiv oylamasında bcc %39 ile ilk sırada yer alırken, en yüksek benzerliğe sahip vaka patoloji ile doğrulanmış bir akiec vakasıdır [ARSIV, V1]. Dermoskopik literatür keratinosit kaynaklı lezyonların ve pigmente yapıların ayırıcı tanısı için çeşitli kriterler tanımlamaktadır [M4, M5].",
+        "aday_tanilar": [
+          {
+            "sinif": "akiec",
+            "lehte": "CNN klinik eşikli kararı akiec sınıfıdır [CNN]. Patoloji ile doğrulanmış 0.58 benzerlikteki en yakın vaka yüz bölgesinde akiec tanısı almıştır [V1]. Arşiv oylamasında %34 paya sahiptir [ARSIV].",
+            "aleyhte": "CNN ham olasılık dağılımında bkl (%38) akiec (%23) ikincil kalmaktadır [CNN]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN tahmin olasılıklarında %38 ile en yüksek paya sahiptir [CNN]. Arşivde patoloji doğrulamalı benzer vakaları bulunmaktadır [V2, V5].",
+            "aleyhte": "Arşiv oylamasında %16 ile üçüncü sıraya gerilemektedir [ARSIV]."
+          },
+          {
+            "sinif": "bcc",
+            "lehte": "Arşiv oylamasında %39 oranıyla en yüksek payı almıştır [ARSIV]. CNN olasılıklarında %20 paya sahiptir [CNN]. Yüz bölgesinde patoloji doğrulamalı benzer vaka örneği vardır [V3].",
+            "aleyhte": "CNN klinik eşikli kararı bcc yönünde değildir [CNN]."
+          }
+        ],
+        "en_olasi_tani": "akiec",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Aktinik keratoz ve Bowen hastalığı için skuam/pul, beyaz halkalar, glomerüler damarlar ve sarı krutlar [M2, M3]",
+          "Bowen hastalığında çift kenar belirtisi ve kahverengi yapısız alan kümeleri [M3]",
+          "Lentigo maligna ayırıcı tanısı için gri romboidal yapılar, asimetrik pigmentli foliküler ağızlar ve gri psödo-şebeke [M1, M2]",
+          "Non-melanom cilt kanserlerinde (bcc, scc) keratin yapıları, kan odakları ve kıvrımlı damarlar [M4, M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 26,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 6,
+        "kullanilan_vaka": 4,
+        "ozet_cumle": 5,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0033162",
+      "gercek": "nv",
+      "cnn": "nv",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanocytic nevus from melanoma",
+        "dermoscopic features of melanocytic nevus"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "11556236",
+        "27119653"
+      ],
+      "cikti": {
+        "ozet": "35 yaşında erkek hastanın gövde yerleşimli lezyonunda CNN %81 olasılıkla melanositik nevüs (nv) kararı vermiştir [HASTA, CNN]. Ancak en benzer 50 arşiv vakasının oylamasında %65 melanom ağırlığı çıkması nedeniyle konsey kapısı uyarısı tetiklenmiştir [ARSIV, KAPI]. Diğer yandan, lezyona en yüksek benzerlik gösteren ilk 5 vakanın tamamı patoloji ve uzman uzlaşısıyla doğrulanmış melanositik nevüs vakalarıdır [V1, V2, V3, V4, V5]. Literatürde atipik nevüsler ile erken evre melanomların dermoskopik olarak yüksek benzerlik gösterebileceği vurgulanmaktadır [M3].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN %81 olasılıkla melanositik nevüs tahmin etmektedir [CNN]. En benzer 5 vakanın tamamı patoloji ve uzman uzlaşısıyla doğrulanmış nv olgularıdır [V1, V2, V3, V4, V5]. Dermoskopik inceleme nevüslere özgü benign kalıpları belirlemede etkilidir [M1, M4].",
+            "aleyhte": "50 vakalık geniş arşiv oylamasında nv oranı %35'te kalmıştır [ARSIV]. Atipik nevüslerin melanom ile klinik ve dermoskopik çakışmaları mevcuttur [M3]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN ikinci olasılık olarak %18 melanom riski öngörmüştür [CNN]. En benzer 50 arşiv vakasının %65'inde tanı melanomdur [ARSIV]. Atipik nevüs ve erken evre melanom benzer görünümler sergileyebilir [M3].",
+            "aleyhte": "En benzer ilk 5 vaka arasında patolojil doğrulanmış melanom vakası bulunmamaktadır [V1, V2, V4, V5]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Benign nevüs ile melanomu ayırt etmede küresel ve yerel dermoskopik paternlerin değerlendirilmesi [M1, M2, M4]",
+          "Atipik nevüs - erken melanom ayrımı için kontrol listeleri ve dermoskopik algoritmaların kullanılması [M3]",
+          "Dermoskopik olarak şüpheli durumlarda altın standart olan histopatolojik inceleme gereksinimi [M3, M5]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 33,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 5,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0030581",
+      "gercek": "nv",
+      "cnn": "mel",
+      "arsiv": "nv",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "5 yaşında kadın hastada [HASTA] CNN'in klinik eşikli kararı %35 güvenle melanom (mel) olsa da en yüksek olasılık %64 ile melanositik nevüse (nv) verilmiştir [CNN]. Konsey kapısı düşük güven ve düşük uyum nedeniyle yüksek konsey gerekliliği bildirmiştir [KAPI]. Patoloji ile doğrulanmış en benzer 5 vakanın tamamı melanositik nevüstür [V1-V5] ve arşiv oylamasında nevüs %55 ile öndedir [ARSIV]. Ayrıca çocukluk çağında melanomun çok nadir görüldüğü literatürde bildirilmektedir [M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN olasılık dağılımında %64 ile ilk sıradadır [CNN]. Patoloji ile doğrulanmış en benzer 5 vakanın tümü nevüstür [V1-V5]. Arşiv oylamasında %55 oranla öndedir [ARSIV]. Çocukluk çağında melanom nadir bir durumdur [HASTA, M4].",
+            "aleyhte": "CNN'in klinik eşikli kararı melanom yönündedir [CNN]. Arşiv oylamasında melanom payı %45 seviyesindedir [ARSIV]. Atipik nevüsler ve melanom benzer dermoskopik özellikler taşıyabilir [M2, M3]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN klinik eşikli kararını melanom olarak belirlemiştir [CNN]. Arşiv oylamasında %45 oranında yer almaktadır [ARSIV]. Erken evre melanom ile atipik nevüslerin ayırt edilmesi güç olup dermoskopik olarak çakışabilir [M2, M3].",
+            "aleyhte": "CNN kalibre güveni %35 düzeyinde kalmıştır ve CNN en yüksek olasılığı nevüse vermiştir [CNN]. Patoloji onaylı en benzer vakaların hiçbirinde melanom yoktur [V1-V5]. 5 yaşındaki çocuklarda melanom görünümü son derece nadirdir [HASTA, M4]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "zayiflatiyor",
+        "bakilacak_bulgular": [
+          "Nevüs ve melanom ayrımını sağlayan küresel ve lokal dermoskopik pigment desenleri [M1, M2]",
+          "Atipik nevüs ve erken evre melanom ayrımında kılavuzluk eden dermoskopik algoritma ve kontrol listeleri [M3]",
+          "Lezyonun anatomik yerleşimine özel (akral vb.) morfolojik dermoskopik özellikler [M4]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 27,
+        "uydurma_kaynaklar": [
+          "V1-V5"
+        ],
+        "kullanilan_makale": 4,
+        "kullanilan_vaka": 0,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0031908",
+      "gercek": "mel",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "75 yaşında erkek hastada sırt bölgesindeki lezyon için CNN %34 kalibre güvenle klinisyen eşikli kararda melanom (mel) yönünde görüş bildirmiştir [HASTA, CNN]. Düşük CNN güveni ve ileri yaş/yüksek risk kombinasyonu nedeniyle vaka konsey eşiğini aşarak incelemeye alınmıştır [KAPI]. Arşiv oylaması %79 oranında melanom lehine sonuçlanmış [ARSIV], patoloji doğrulamalı en benzer 4 vaka da melanom olarak raporlanmıştır [V1, V2, V3, V4]. Melanom ve atipik nevüslerin klinik ve dermoskopik benzerlikleri dikkate alınarak titiz bir dermoskopik inceleme önerilmektedir [M2, M3].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "Klinisyen eşikli CNN kararı [CNN], %79 arşiv oylaması [ARSIV] ve patoloji ile doğrulanmış en benzer 4 vaka [V1, V2, V3, V4] melanom tanısını desteklemektedir.",
+            "aleyhte": "CNN olasılık dağılımında en yüksek ham yüzde melanositik nevüse (%66) aittir [CNN]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN ham olasılık dağılımında %66 ile en yüksek olasılığa sahiptir [CNN] ve uzman uzlaşısıyla doğrulanmış benzer vaka bulunmaktadır [V5].",
+            "aleyhte": "Arşiv oylamasında oy oranı %21'de kalmıştır [ARSIV] ve patoloji doğrulamalı en yakın vakalar melanomdur [V1, V2, V3, V4]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "destekliyor",
+        "bakilacak_bulgular": [
+          "Atipik nevüs ve erken evre melanom ayrımı için dermoskopik algoritma ve kontrol listeleri [M3]",
+          "Nevüsler ve melanomda ortak görülebilen global ve lokal dermoskopik kriterlerin değerlendirilmesi [M2]",
+          "Melanomun alt tiplerine (yüzeyel yayılan, nodüler vb.) özgü değişken dermoskopik kalıplar [M4]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 27,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 3,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0033975",
+      "gercek": "mel",
+      "cnn": "df",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate dermatofibroma from melanoma",
+        "dermoscopic features of dermatofibroma"
+      ],
+      "makale_pmid": [
+        "24134084",
+        "26236411",
+        "23176079",
+        "36832159",
+        "16188191",
+        "40265341"
+      ],
+      "cikti": {
+        "ozet": "85 yaşında erkek hastada abdomen yerleşimli lezyon için CNN klinik eşikli kararı dermatofibrom (df) belirlese de kalibre güven %13 seviyesindedir [HASTA, CNN]. CNN modelinin ilk olasılığı %52 ile melanomdur ve arşiv oylamasında da melanom %43 ile en yüksek oyu almıştır [CNN, ARSIV]. Patoloji doğrulamalı en benzer vakaların 3'ü melanom (ör. abdominal yerleşimli V2) olup 2'si melanositik nevüstür [V1, V2, V3, V4, V5]. Literatürde atipik dermatofibromların melanomu taklit edebildiği ve kesin tanı için histopatolojik inceleme gerekebileceği vurgulanmaktadır [M2, M3, M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN ilk olasılığı %52 [CNN] ve arşiv oylaması %43 ile liderdir [ARSIV]. Patoloji ile doğrulanmış en benzer vakaların 3'ü melanomdur (V2 hasta ile aynı bölgededir) [V2, V4, V5]. Dermatofibromların melanomu taklit edebileceği veya kolizyon tümörü oluşturabileceği bildirilmiştir [M2, M3, M6].",
+            "aleyhte": "CNN klinik eşikli kararı dermatofibromdur [CNN]."
+          },
+          {
+            "sinif": "df",
+            "lehte": "CNN klinik eşikli kararı dermatofibromdur [CNN]. Arşiv oylamasında %35 oranında temsil edilmektedir [ARSIV]. Atipik ve hemosiderotik dermatofibromların ileri yaşta melanomu taklit eden dermoskopik desenler sunabileceği literatürde kayıtlıdır [M2, M3, M4].",
+            "aleyhte": "CNN kalibre güveni yalnızca %13'tür [CNN]. Patoloji doğrulamalı en benzer 5 vaka arasında dermatofibrom bulunmamaktadır [V1-V5]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN olasılık sıralamasında %26 ile 2. sıradadır [CNN]. Patoloji doğrulamalı benzer vakalardan ikisi (V1, V3) melanositik nevüstür [V1, V3].",
+            "aleyhte": "Arşiv oylamasında adaylar arasında en düşük paya (%22) sahiptir [ARSIV]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "zayiflatiyor",
+        "bakilacak_bulgular": [
+          "Atipik pigment ağı, mavi-beyaz renk ve dermoskopik asimetri varlığı [M1]",
+          "Merkezi beyaz alan ve çevresel pigment ağı (tipik DF deseni) [M5]",
+          "Atipik/hemosiderotik DF ve melanom ayırıcı tanısı için histopatolojik doğrulama [M2, M4]",
+          "Melanom veya BCC ile çakışma (kolizyon) tümörü bulguları [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 37,
+        "uydurma_kaynaklar": [
+          "V1-V5"
+        ],
+        "kullanilan_makale": 6,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 5,
+        "kaynaksiz_cumle": 1
+      }
+    },
+    {
+      "image_id": "ISIC_0026268",
+      "gercek": "mel",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic features of melanoma",
+        "lesions mimicking melanoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "24813835",
+        "20197749",
+        "28121084",
+        "20197750",
+        "39337982"
+      ],
+      "cikti": {
+        "ozet": "80 yaşında erkek hastanın yüz bölgesinde yer alan lezyonu için CNN %91 kalibre güvenle melanom (mel) tahmininde bulunmuştur [HASTA, CNN]. Konsey kapısı, ileri yaş ve risk faktörleri doğrultusunda K11 ve K12 kurallarını tetikleyerek vakayı konseye sevk etmiştir [KAPI]. Arşiv oylamasında %85 oranında melanom ağırlığı görülmüş olup patoloji ile doğrulanmış en benzer 5 vakanın tamamı melanomdur [ARSIV, V1, V2, V3, V4, V5]. Literatür, melanomun benign ve non-melanositik lezyonları taklit edebileceğini, bu nedenle dermoskopik kriterlerin dikkatle değerlendirilmesi gerektiğini vurgulamaktadır [M2, M4, M5].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN %91 yüksek olasılık vermiştir [CNN], arşiv oylaması %85 oranında melanomu desteklemektedir [ARSIV] ve patoloji onaylı en benzer 5 vakanın tamamı melanomdur [V1, V2, V3, V4, V5].",
+            "aleyhte": "Bazı zor teşhis edilen veya amelanotik melanom türlerinin tanı karmaşası yaratma ihtimali bulunmaktadır [M5, M6]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN ikincil olasılığı %6 [CNN] ve arşiv oylaması %9 oranındadır [ARSIV]. Nevüs ve melanom dermoskopik kriterleri benzerlik gösterebilir [M3].",
+            "aleyhte": "Patoloji ile doğrulanmış en benzer vakalar arasında nevüs vakası bulunmamaktadır [V1, V2, V3, V4, V5]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN %3 olasılık sunmuş [CNN], arşiv oylamasında %6 oranında tespit edilmiştir [ARSIV].",
+            "aleyhte": "En benzer patoloji onaylı vakaların hiçbirinde benign keratoz bulunmamaktadır [V1, V2, V3, V4, V5]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "destekliyor",
+        "bakilacak_bulgular": [
+          "Asimetri, sınır düzensizliği ve renk çeşitliliği kriterlerinin (ABCD kuralı) varlığı [M5]",
+          "Pigmentli yapıların sub-makroskopik dermoskopik paternleri ve pigment dağılımı [M1, M3]",
+          "Pigment eksikliği veya atipik görünüm durumunda vasküler dermoskopik kriterlerin değerlendirilmesi [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 40,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 6,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0030341",
+      "gercek": "akiec",
+      "cnn": "bcc",
+      "arsiv": "bcc",
+      "sorgular": [
+        "dermoscopic features of basal cell carcinoma",
+        "lesions mimicking basal cell carcinoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "26450622",
+        "31706938",
+        "27356243",
+        "38813281",
+        "39336428",
+        "35102605"
+      ],
+      "cikti": {
+        "ozet": "70 yaşındaki kadın hastanın sırtındaki lezyon için CNN %83 olasılıkla bazal hücreli karsinom (bcc) kararı vermiştir [HASTA, CNN]. Arşiv oylaması %83 bcc ve %17 akiec yönünde sonuçlanmıştır [ARSIV]. Patoloji ile doğrulanmış en benzer 5 eğitim vakasının (V1-V5) tamamı bcc tanısı almıştır [V1, V2, V3, V4, V5]. Literatür, dermoskopik bulguların BCC tanısı ve alt tiplerinin ayırt edilmesinde yüksek klinik değere sahip olduğunu göstermektedir [M1, M2, M3, M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "bcc",
+            "lehte": "CNN kararı %83 [CNN], arşiv oylaması %83 [ARSIV] ve patoloji onaylı tüm benzer vakalar (V1-V5) bcc tanısını desteklemektedir [V1, V2, V3, V4, V5]. Dermoskopi BCC tanısında anahtar araçtır [M1, M3, M4].",
+            "aleyhte": "A tipik vakalarda melanom veya actinic keratosis ile karışabilen paternler görülebilir [M4, M6]."
+          },
+          {
+            "sinif": "akiec",
+            "lehte": "CNN ikincil olasılığı %15 [CNN] ve arşiv oylaması %17 [ARSIV] oranındadır.",
+            "aleyhte": "Patoloji onaylı benzer vakaların hiçbirinde tespit edilmemiştir [V1, V2, V3, V4, V5]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN'de %2 düşük olasılık olarak yer almaktadır [CNN].",
+            "aleyhte": "Arşiv oylamasında %0 pay almıştır [ARSIV] ve patolojik doğrulamalı benzer vakalarla desteklenmemektedir [V1, V2, V3, V4, V5]."
+          }
+        ],
+        "en_olasi_tani": "bcc",
+        "kanit_yonu": "destekliyor",
+        "bakilacak_bulgular": [
+          "Dallanan damarlar (arborizing vessels) [M2]",
+          "Parlak beyaz yapılar (shiny white structures) [M2]",
+          "Büyük mavi-gri ovoid yuvalar ve küreler [M2]",
+          "Ülserasyon veya birden fazla küçük erozyon [M2]",
+          "Yaprak benzeri, tekerlek parmağı (spoke wheel) ve konsantrik yapılar [M2]",
+          "Atipik vasküler paternler [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 44,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 5,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0031942",
+      "gercek": "nv",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "65 yaşındaki erkek hastanın sırtındaki lezyon için CNN klinik eşikli kararı %29 güvenle melanom (mel) yönünde vermiş olsa da ham olasılıkta %70 ile melanositik nevüs (nv) ön plandadır [HASTA, CNN]. Arşivdeki benzer vakaların sınıflandırılmasında %63 oranında melanom ağırlığı görülmektedir [ARSIV]. Ancak patoloji doğrulalamalı en benzer 5 vakadan 4'ü melanositik nevüs, 1'i ise melanom tanısı almıştır [V1, V2, V3, V4, V5]. Literatürde atipik nevüsler ile erken evre melanomların benzer dermoskopik özellikler taşıyabileceği ve ayırt edici kriterlerin dikkatle incelenmesi gerektiği vurgulanmaktadır [M2, M3].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN klinik eşikli kararı melanomdur [CNN], arşiv oylamasının %63'ü melanom yönündedir [ARSIV] ve patoloji onaylı benzer vaka mevcuttur [V5].",
+            "aleyhte": "CNN ham model güveni %29'da kalmaktadır [CNN] ve en benzer yüksek puanlı vakaların büyük çoğunluğu nevüstür [V1, V2, V3, V4]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN ham olasılık dağılımında %70 ile ilk sırada yer almaktadır [CNN] ve patoloji doğrulamalı en yüksek benzerlik gösteren 4 vaka melanositik nevüstür [V1, V2, V3, V4].",
+            "aleyhte": "CNN klinik eşikli kararı melanomdur [CNN] ve arşiv oylamasında %37 seviyesindedir [ARSIV]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Atipik nevüs ile erken evre melanomu ayırt etmek için özel dermoskopik algoritma ve kriterlerin kullanılması [M3].",
+          "Hem nevüslerde hem de melanomda ortak görülebilen global ve lokal dermoskopik kriterlerin değerlendirilmesi [M2].",
+          "Pigmente histopatolojik yapıların alt-makroskopik dermoskopik paternlerinin incelenmesi [M1].",
+          "Melanomun alt tiplerine ve büyüme şekline göre değişen klinik ve dermoskopik morfolojik özelliklerinin değerlendirilmesi [M4]."
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 29,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 4,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0027365",
+      "gercek": "bcc",
+      "cnn": "bcc",
+      "arsiv": "bcc",
+      "sorgular": [
+        "dermoscopic features of basal cell carcinoma",
+        "lesions mimicking basal cell carcinoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "26450622",
+        "31706938",
+        "27356243",
+        "38813281",
+        "39336428",
+        "35102605"
+      ],
+      "cikti": {
+        "ozet": "70 yaşında erkek hastanın yüz yerleşimli lezyonu için CNN %35 olasılıkla bazal hücreli karsinom (bcc) kararı vermiş, ancak melanom (mel %33) ile son derece yakın bir olasılık çelişkisi oluşmuştur [CNN, HASTA]. Konsey kapısı düşük güven ve düşük uyum nedeniyle vakayı konsey incelemesine yönlendirmiştir [KAPI]. Arşiv oylamasında bcc %60 oranıyla belirgin şekilde öne çıkarken [ARSIV], patoloji doğrulamalı en benzer vakalarda yüz yerleşimli bcc ve melanom örnekleri bulunmaktadır [V1, V4]. Literatür, özellikle atipik vasküler patern gösteren bcc lezyonlarının melanomu taklit edebileceğini bildirmektedir [M6].",
+        "aday_tanilar": [
+          {
+            "sinif": "bcc",
+            "lehte": "CNN ilk sırada bcc tahmin etmiştir [CNN]. Arşiv oylamasında %60 oranla baskındır [ARSIV]. Patoloji doğrulamalı en benzer vaka yüz yerleşimli bir bcc hastasıdır [V1, V3]. Dermoskopide dallanan damarlar, parlak beyaz yapılar ve mavi-gri ovoid yuvalar bcc için karakteristik bulgulardır [M2].",
+            "aleyhte": "CNN'in kalibre güveni %35 ile oldukça düşüktür ve melanom olasılığına (%33) çok yakındır [CNN]. Bcc vakaları bazen dermoskopik olarak melanomu taklit edebilir [M6]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN tahmininde %33 ile bcc'ye çok yakın ikinci sıradadır [CNN]. Patoloji doğrulamalı benzer vakalar arasında yüz yerleşimli melanom bulunmaktadır [V4, V5]. Arşiv oylamasında %26 paya sahiptir [ARSIV]. Atipik vasküler yapılar her iki lezyon türünde de ortak görülebilir [M6].",
+            "aleyhte": "Arşiv oylamasında bcc'nin (%60) gerisinde kalmıştır [ARSIV]. CNN ilk tercihi bcc olarak belirlemiştir [CNN]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN tahmin listesinde %16 olasılıkla yer almaktadır [CNN]. Patoloji ile doğrulanmış benzer vaka mevcuttur [V2].",
+            "aleyhte": "Arşiv oylamasındaki payı (%8) düşüktür [ARSIV]. İleri yaş ve yüz bölgesinde yerleşim malignite olasılığını ön plana çıkarmaktadır [HASTA, KAPI]."
+          }
+        ],
+        "en_olasi_tani": "bcc",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Dallanan damarlar (arborizing vessels), parlak beyaz yapılar ve iri mavi-gri ovoid yuvalar [M2]",
+          "Ülserasyon varlığı ve kısa ince telanjiyektaziler [M2]",
+          "Melanom ile karışabilecek atipik vasküler paternler ve ayırıcı tanı belirteçleri [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 29,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 2,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0028069",
+      "gercek": "mel",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "35 yaşında kadın hastanın boyun lezyonunda CNN %40 kalibre güvenle melanom klinik kararı vermiş, ancak ham olasılıkta melanositik nevüs %57 ile ilk sırada yer almıştır [HASTA, CNN]. Düşük güven ve düşük uyum nedenleriyle vaka konseye sevk edilirken, arşiv oylaması %55 oranında melanom yönündedir [KAPI, ARSIV]. Patoloji doğrulanalı en benzer vakaların çoğunluğu melanositik nevüs olup bir vaka melanom olarak raporlanmıştır [V1, V2, V3, V5]. Literatür, özellikle atipik nevüsler ile erken evre melanomların klinik ve dermoskopik olarak yüksek benzerlik gösterdiğini belirtmektedir [M3, M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN ham olasılığında %57 ile en yüksek paya sahiptir [CNN]. Patoloji ile doğrulanmış en benzer vakaların çoğunluğu melanositik nevüstür [V1, V2, V5].",
+            "aleyhte": "Arşiv oylamasında oy oranı %34'te kalmıştır [ARSIV]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN klinik eşikli kararı melanomdur [CNN]. Arşiv oylaması %55 oranında melanomu desteklemektedir [ARSIV]. Benzer vakalar arasında patoloji doğrulamalı melanom mevcuttur [V3]. Melanom genç erişkinlerde de görülebilmektedir [M4].",
+            "aleyhte": "CNN ham olasılığı %40 seviyesindedir [CNN]. Patoloji doğrulamalı en benzer vakaların çoğunluğu melanositik nevüstür [V1, V2, V5]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN olasılıklarında %3, arşiv oylamasında %11 oranında temsil edilmektedir [CNN, ARSIV].",
+            "aleyhte": "Benzer vakalar arasında destekleyen patolojik örnek bulunmamaktadır [V1-V5]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Benign ve malign melanositik ayrımında global ve lokal dermoskopik örüntüler [M1, M2]",
+          "Atipik nevüs ve erken evre melanom ayrımı için dermoskopik algoritmalar ve kontrol listeleri [M3]",
+          "Dermoskopik ve histopatolojik belirsizlik durumunda moleküler biyoloji teknikleri [M3]",
+          "Anatomik lokalizasyon ve büyüme tipine göre değişkenlik gösteren morfolojik özellikler [M4]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 31,
+        "uydurma_kaynaklar": [
+          "V1-V5"
+        ],
+        "kullanilan_makale": 4,
+        "kullanilan_vaka": 4,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0026541",
+      "gercek": "nv",
+      "cnn": "mel",
+      "arsiv": "nv",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "45 yaşında erkek hastanın abdomen yerleşimli lezyonu için CNN klinik eşikli karar olarak melanom (mel) belirlemiş olsa da kalibre güven %30'dur ve ham olasılıkta melanositik nevüs (nv) %70 ile ilk sıradadır [CNN]. Arşiv oylaması nv (%51) ve mel (%49) arasında dengeli dağılmış, düşük güven ve uyum nedeniyle konsey kapısı tetiklenmiştir [ARSIV] [KAPI]. Patoloji ile doğrulanmış en benzer vakaların tamamı melanositik nevüs (nv) tanısına sahiptir [V1] [V2] [V3] [V5]. Literatür, atipik nevüsler ile erken evre melanomların klinik ve dermoskopik açıdan yüksek benzerlik gösterdiğini doğrulamaktadır [M2] [M3] [M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN klinik eşikli kararı melanom yönündedir [CNN] ve arşiv oylamasında %49 pay almıştır [ARSIV]. Erken evre melanomlar atipik nevüsleri taklit edebilir [M3] [M4].",
+            "aleyhte": "CNN kalibre güveni %30 gibi düşük bir seviyededir [CNN] ve patoloji onaylı en benzer vakaların hiçbirinde melanom saptanmamıştır [V1] [V2] [V3] [V5]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN en yüksek olasılığı %70 ile melanositik nevüse vermiştir [CNN], arşiv oylamasında %51 ile ilk sıradadır [ARSIV] ve en benzer 5 vakanın tümü (4'ü patoloji onaylı) nv tanılıdır [V1] [V2] [V3] [V4] [V5].",
+            "aleyhte": "Atipik nevüslerin melanom ile klinik ve dermoskopik benzerliği nedeniyle kesin ayrımı güçtür [M3]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "zayiflatiyor",
+        "bakilacak_bulgular": [
+          "Nevüs ve melanom ayrımında kullanılan küresel ve lokal dermoskopik paternler [M1] [M2]",
+          "Erken evre melanom ile atipik nevüsleri ayırt etmeye yarayan dermoskopik algoritma ve kontrol listesi ölçütleri [M3]",
+          "Lezyonun anatomik konumuna ve büyüme tipine göre değişebilen dermoskopik morfoloji özellikleri [M4]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 31,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 4,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0026782",
+      "gercek": "nv",
+      "cnn": "nv",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanocytic nevus from melanoma",
+        "dermoscopic features of melanocytic nevus"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "11556236",
+        "27119653"
+      ],
+      "cikti": {
+        "ozet": "CNN modeli %79 kalibre güven ile melanositik nevüs (nv) tahmininde bulunmuştur [CNN]. Ancak 50 vakalık arşiv oylaması %63 oranında melanom (mel) yönündedir [ARSIV] ve konsey kapısı düşük güven ile düşük uyum kurallarıyla tetiklenmiştir [KAPI]. En yüksek benzerliğe sahip ilk 5 vaka patoloji ile doğrulanmış melanositik nevüs vakalarıdır [V1][V2][V3][V4][V5]. Literatür, atipik nevüsler ile erken evre melanomun dermoskopik ve klinik olarak birbirini taklit edebileceğini bildirmektedir [M2][M3].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN klinik eşikli kararı %79 olasılıkla nv yönündedir [CNN]. En benzer 5 vakada patoloji onaylı nevüs tanıları mevcuttur [V1][V2][V3][V4][V5].",
+            "aleyhte": "Arşiv oylamasında nv oranı %37'de kalmıştır [ARSIV] ve model uyumsuzluk göstergesi vermektedir [KAPI]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "Arşiv oylamasında vakaların %63'ü melanom olarak dağılmıştır [ARSIV]. CNN modelinde ikinci en yüksek olasılık %20 ile melanomdur [CNN]. Atipik nevüsler erken evre melanom ile yüksek benzerlik gösterebilir [M3].",
+            "aleyhte": "En yakın 5 benzer vaka arasında patolojik olarak doğrulanmış melanom vakası bulunmamaktadır [V1][V2][V3][V4][V5]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Nevüs ve melanomda ortak görülebilen küresel ve yerel dermoskopik kriterlerin değerlendirilmesi [M2].",
+          "Atipik nevüs ile erken evre melanom ayrımı için dermoskopik algoritmaların ve kontrol listelerinin kullanılması [M3].",
+          "Tanıda belirsizlik devam ederse altın standart olan histopatolojik korelasyona ve alt yüzey deri yapılarının dermoskopik değerlendirmesine başvurulması [M5]."
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 29,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 3,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0025471",
+      "gercek": "akiec",
+      "cnn": "bcc",
+      "arsiv": "bcc",
+      "sorgular": [
+        "dermoscopic features of basal cell carcinoma",
+        "lesions mimicking basal cell carcinoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "26450622",
+        "31706938",
+        "27356243",
+        "38813281",
+        "39336428",
+        "35102605"
+      ],
+      "cikti": {
+        "ozet": "85 yaşında erkek hastanın göğüs bölgesindeki lezyonu için CNN %52 güvenle bazal hücreli karsinom (bcc) kararı vermiş, ikinci sırada %31 ile benign keratoz (bkl) yer almıştır [HASTA, CNN]. Konsey kapısı yüksek yaş ve düşük/orta uyum-güven kuralları nedeniyle yüksek konsey gerekliliği (83.2) bildirmiştir [KAPI]. Arşiv oylamasında %73 oranında BCC öne çıkarken, en benzer 5 vakadan 4'ü patoloji ile doğrulanmış BCC, 1'i ise patoloji doğrulamalı AKIEC tanılıdır [ARSIV, V1, V2, V3, V4, V5]. Literatür, BCC'nin tanısında ve alt tiplerinin ayırt edilmesinde özgün dermoskopik damar ve pigment yapılarının kritik olduğunu belirtmektedir [M1, M2, M3].",
+        "aday_tanilar": [
+          {
+            "sinif": "bcc",
+            "lehte": "CNN %52 güvenle ilk sırada tahmin etmiştir [CNN]. Arşiv oylamasında %73 oranında baskındır [ARSIV]. Patoloji doğrulamalı en benzer 4 vaka BCC tanılıdır [V1, V2, V3, V4]. Literatürde dermoskopik kriterlerle tanısının konulabildiği gösterilmiştir [M1, M2, M3, M4].",
+            "aleyhte": "CNN kalibre güveni %52 ile orta/düşük seviyededir [CNN, KAPI]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN olasılıklarında %31 ile ikinci sırada yer almaktadır [CNN].",
+            "aleyhte": "Arşiv oylama payı düşüktür (%5) [ARSIV] ve patoloji doğrulamalı benzer vakalar arasında BKL bulunmamaktadır [V1, V2, V3, V4, V5]."
+          },
+          {
+            "sinif": "akiec",
+            "lehte": "Arşiv oylamasında %22 paya sahiptir [ARSIV] ve benzer vakalardan V5 patoloji doğrulamalı AKIEC tanılıdır [V5]. CNN %12 olasılık vermiştir [CNN]. Literatürde ayırıcı tanıda yer alabilecek durumlar arasındadır [M4].",
+            "aleyhte": "CNN olasılığı %12 ile düşüktür [CNN] ve en benzer vakaların çoğunluğu BCC'dir [V1, V2, V3, V4]."
+          }
+        ],
+        "en_olasi_tani": "bcc",
+        "kanit_yonu": "destekliyor",
+        "bakilacak_bulgular": [
+          "Dallanan damarlar (arborizing vessels), parlak beyaz yapılar ve büyük mavi-gri ovoid yuvalar [M2]",
+          "Kısa ince telanjiyektaziler, küçük erozyonlar, yaprak benzeri veya tekerlek parmağı yapıları [M2]",
+          "Porselen beyazı alanlar ve ülserasyon odakları [M2]",
+          "Atipik vasküler paternler [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 44,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 5,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0033216",
+      "gercek": "mel",
+      "cnn": "nv",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanocytic nevus from melanoma",
+        "dermoscopic features of melanocytic nevus"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "11556236",
+        "27119653"
+      ],
+      "cikti": {
+        "ozet": "Sırt bölgesinde lezyonu bulunan 30 yaşında kadın hastada CNN, %90 olasılıkla melanositik nevüs (nv) kararı vermiştir [HASTA, CNN]. Arşivdeki en benzer 5 vakanın tamamı nv tanılıdır ve bunlardan en yüksek benzerliğe sahip vaka patoloji doğrulamasın sahiptir [V1, V2, V3, V4, V5]. Buna karşın düzeltilmiş arşiv oylaması %65 oranında melanomu (mel) işaret etmektedir [ARSIV] ve bu durum K2 kuralı uyarınca yüksek konsey gerekliliği tetiklemiştir [KAPI]. Literatürde atipik nevüsler ile erken evre melanomun klinik ve dermoskopik olarak birbirini taklit edebileceği, ayırıcı tanı için dermoskopik algoritmalar ile histopatolojinin kritik olduğu belirtilmektedir [M2, M3, M5].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN %90 olasılıkla bu tanıyı koymuştur [CNN]. En benzer 5 vakanın tamamı nevüs tanılıdır ve V1 patoloji ile doğrulanmıştır [V1, V2, V3, V4, V5].",
+            "aleyhte": "Arşiv oylamasında nv oranı %35'tir [ARSIV] ve düşük uyum nedeniyle konsey kapısı uyarısı verilmiştir [KAPI]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "Arşiv oylamasında %65 ile en yüksek ağırlığa sahiptir [ARSIV]. CNN %10 olasılıkla ikinci sırada melanom değerlendirmesi yapmıştır [CNN]. Erken evre melanom ile nevüsler klinik/dermoskopik benzerlik gösterebilir [M3].",
+            "aleyhte": "En benzer 5 vaka arasında melanom tanısı bulunmamaktadır [V1, V2, V3, V4, V5]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Benign ve malign melanositik lezyonları ayırmaya yarayan küresel ve lokal dermoskopik örüntüler [M1, M2, M4]",
+          "Atipik nevüs ve erken evre melanom ayrımında kullanılan dermoskopik algoritmalar ve kontrol listeleri [M3]",
+          "Şüpheli vakalarda kesin tanı için altın standart olan histopatolojik değerlendirme [M3, M5]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 34,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 5,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0027492",
+      "gercek": "nv",
+      "cnn": "nv",
+      "arsiv": "bcc",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanocytic nevus from basal cell carcinoma",
+        "dermoscopic features of melanocytic nevus"
+      ],
+      "makale_pmid": [
+        "25714607",
+        "40581422",
+        "22481578",
+        "11556236",
+        "27119653"
+      ],
+      "cikti": {
+        "ozet": "Göğüs bölgesinde lezyonu olan 50 yaşındaki kadın hastada CNN %92 olasılıkla melanositik nevüs (nv) öngörmüştür [HASTA, CNN]. Patoloji ile doğrulanmış en benzer 5 vakayı kapsayan kanıtlar %100 oranında melanositik nevüs tanısına işaret etmektedir [V1, V2, V3, V4, V5]. Ancak geniş arşiv oylamasında bazal hücreli karsinomun (bcc) %61 öne çıkması ve CNN ile uyumsuzluk göstermesi konsey gerekliliğini artırmıştır [ARSIV, KAPI]. Literatürde 2 adımlı dermoskopik algoritmaların melanositik lezyon ayrımında %85 hassasiyet sunduğu ve kesin tanı için histopatolojinin altın standart olduğu bildirilmektedir [M1, M5].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN %92 olasılıkla nv tahmin etmiştir [CNN]. En benzer 5 vakanın tamamı patoloji onaylı nv tanılıdır [V1, V2, V3, V4, V5]. Literatürde nevüslere özgü dermatolojik kalıplar tanımlanmıştır [M3, M4].",
+            "aleyhte": "Arşiv oylamasında %34 oy oranında kalmıştır [ARSIV]. 2 adımlı algoritmada %7 oranında uyumsuz sınıflandırma riski vardır [M1]."
+          },
+          {
+            "sinif": "bcc",
+            "lehte": "Arşiv oylamasında %61 ile en yüksek oyu almıştır [ARSIV]. Pigmente BCC için güncel dermoskopik tanı kriterleri mevcuttur [M2].",
+            "aleyhte": "CNN olasılığı %2 ile düşüktür [CNN]. En benzer 5 patolojik doğrulamalı vakada yer almamaktadır [V1-V5]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN olasılık sıralamasında ikinci sırada (%4) yer almaktadır [CNN]. Dermoskopik algoritmalar ve genetik profilleme melanom ayrımında kritik öneme sahiptir [M2, M3, M5].",
+            "aleyhte": "En benzer vakaların hiçbirinde patolojik melanom tanısı yoktur [V1-V5]. Arşiv oylama payı düşüktür (%5) [ARSIV]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Melanositik ve gayri-melanositik ayrımı için 2 adımlı dermoskopi algoritma kriterleri [M1]",
+          "Pigmente bazal hücreli karsinom, nevüs ve melanom ayrımına yönelik ABCDE kuralı ve 7-nokta kontrol listesi bulguları [M2]",
+          "Benign melanositik nevüslere özgü tipik dermoskopik yapılar ve paternler [M3, M4]",
+          "Gerektiğinde altın standart histopatolojik korelasyon değerlendirmesi [M5]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 36,
+        "uydurma_kaynaklar": [
+          "V1-V5"
+        ],
+        "kullanilan_makale": 5,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0032061",
+      "gercek": "bcc",
+      "cnn": "bcc",
+      "arsiv": "bcc",
+      "sorgular": [
+        "dermoscopic features of basal cell carcinoma",
+        "lesions mimicking basal cell carcinoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "26450622",
+        "31706938",
+        "27356243",
+        "38813281",
+        "39336428",
+        "35102605"
+      ],
+      "cikti": {
+        "ozet": "75 yaşında erkek hastanın kafa derisindeki lezyon için CNN modeli %87 olasılıkla bazal hücreli karsinom (bcc) kararı vermiştir [HASTA, CNN]. Arşiv oylaması %86 oranında bcc tanısını desteklemekte olup, patoloji ile doğrulanmış en benzer vakaların tamamı bcc'dir [ARSIV, V1, V2, V3, V4, V5]. İleri yaş ve risk faktörleri nedeniyle konsey kapısı tetiklenmiştir [HASTA, KAPI]. Dermoskopi literatürü bcc tanısında ve melanom gibi taklitçilerden ayrımında kritik kriterler sunmaktadır [M1, M2, M6].",
+        "aday_tanilar": [
+          {
+            "sinif": "bcc",
+            "lehte": "CNN kararı %87 [CNN], arşiv oylarında %86 baskınlık [ARSIV], patoloji ile doğrulanmış kafa derisi yerleşimli benzer vakalar (V1, V2) dahil tüm benzer vakalar [V1, V2, V3, V4, V5].",
+            "aleyhte": "Atipik vakalarda melanomu taklit eden dermoskopik bulgular sergileyebilir [M6]."
+          },
+          {
+            "sinif": "akiec",
+            "lehte": "CNN ikincil olasılığı %7 [CNN], arşiv oylaması %9 [ARSIV].",
+            "aleyhte": "En benzer patolojik vakalar arasında yer almamaktadır [V1, V2, V3, V4, V5]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN listesinde %5 olasılık [CNN], bazı bcc vakalarının melanomu taklit edebilmesi [M6].",
+            "aleyhte": "Arşiv oyu son derece düşüktür (%3) [ARSIV] ve patoloji onaylı benzer vakalarla desteklenmemektedir [V1, V2, V3, V4, V5]."
+          }
+        ],
+        "en_olasi_tani": "bcc",
+        "kanit_yonu": "destekliyor",
+        "bakilacak_bulgular": [
+          "Arborize (dallanan) damarlar, parlak beyaz yapılar ve büyük mavi-gri ovoid yuvalar [M2]",
+          "Ülserasyon, odak erosyonlar ve kısa-ince telanjiyaktaziler [M2]",
+          "Melanom ile ayırıcı tanıda atipik damar örüntüleri ve trump özellikleri [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 39,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 3,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0028761",
+      "gercek": "nv",
+      "cnn": "mel",
+      "arsiv": "nv",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "Hasta 45 yaşında bir kadın olup lezyon alt ekstremitede bulunmaktadır [HASTA]. CNN modelinin klinik eşikli kararı %25 kalibre güvenle melanom (mel) olarak belirlenmişse de, olasılık dağılımında melanositik nevüs (nv) %74 ile ilk sıradadır [CNN]. Arşiv oylaması %55 oranında melanositik nevüsü işaret ederken [ARSIV], patoloji ile doğrulanmış en benzer 5 vakanın tümü melanositik nevüştür [V1][V2][V3][V4][V5]. Literatür ise atipik nevüsler ile erken evre melanomun dermoskopik benzerlik gösterebileceğini vurgulamaktadır [M2][M3][M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "nv",
+            "lehte": "CNN olasılık dağılımında %74 ile en yüksek paya sahiptir [CNN], arşiv oylamasında %55 oran almıştır [ARSIV] ve patoloji doğrulamalı en benzer 5 vakanın tamamı melanositik nevüştür [V1][V2][V3][V4][V5].",
+            "aleyhte": "CNN klinik eşikli kararı melanom yönündedir [CNN] ve atipik nevüsler klinik/dermoskopik olarak melanomu taklit edebilir [M3]."
+          },
+          {
+            "sinif": "mel",
+            "lehte": "CNN klinik eşikli kararı melanomdur [CNN], arşiv oylamasında %45 pay almıştır [ARSIV] ve hasta yaşı melanom sıklığının arttığı yaş grubuna yakındır [HASTA][M4].",
+            "aleyhte": "CNN kalibre güveni yalnızca %25 seviyesindedir [CNN] ve patolojik doğrulamalı en benzer vakaların hiçbirinde melanom saptanmamıştır [V1][V2][V3][V4][V5]."
+          }
+        ],
+        "en_olasi_tani": "nv",
+        "kanit_yonu": "zayiflatiyor",
+        "bakilacak_bulgular": [
+          "Sub-makroskobik pigmentli yapılar ve histopatolojik korelasyon gösteren dermoskopik paternler [M1]",
+          "Nevüs ve melanom ayırımında nevüse özgü küresel ve yerel dermoskopik kriterler [M2]",
+          "Erken evre melanom ile atipik nevüs ayırımı için kontrol listeleri ve dermoskopik algoritmalar [M3]",
+          "Büyüme tipi ve anatomik lokalizasyona bağlı olarak değişen dermoskopik özellikler [M4]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 34,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 4,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0027258",
+      "gercek": "nv",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic features of melanoma",
+        "lesions mimicking melanoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "24813835",
+        "20197749",
+        "28121084",
+        "20197750",
+        "39337982"
+      ],
+      "cikti": {
+        "ozet": "55 yaşında kadın hastanın sırt lezyonunda CNN, %48 düşük güven oranı ile ilk sırada Melanom (mel) tahmininde bulunmuştur [HASTA, CNN]. Arşiv oylaması Melanom (%36), Dermatofibrom (%28) ve Benign keratoz (%23) arasında dağılmış olup düşük uyum nedeniyle konsey kapısı tetiklenmiştir [KAPI, ARSIV]. En benzer vakalar patoloji ile doğrulanmış Melanom [V3, V5] ve Melanositik nevüs [V2] lezyonlarının yanı sıra takip ve uzlaşıyla doğrulanan benign lezyonları içermektedir [V1, V4]. Melanomun benign melanositik veya non-melanositik lezyonları taklit edebildiği ve dermoskopik olarak tanısal zorluk yaratabildiği literatürde bildirilmektedir [M2, M5, M6].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN ilk olasılık olarak (%48) gösterilmiştir [CNN]. Arşiv oylamasında %36 ile en yüksek oyu almıştır [ARSIV]. Patoloji ile doğrulanmış benzer vakalar bulunmaktadır [V3, V5].",
+            "aleyhte": "CNN kalibre güveni düşük (%48) ve uyum yetersizdir [CNN, KAPI]. Benign nevüs ve keratozlar ile dermoskopik bulguları karışabilir [M3, M5]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN'de %31 olasılıkla ikinci sırada yer almaktadır [CNN]. Arşiv oylamasında %23 oranında desteklenmektedir [ARSIV]. Benzer vaka örneği mevcuttur [V4].",
+            "aleyhte": "Benzer vaka doğrulama yöntemi yalnızca uzman uzlaşısıdır [V4]. Melanomun benign taklitçilerinden biri olabilir [M5]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN %20 olasılık vermiştir [CNN]. Patoloji doğrulamalı benzer vaka mevcuttur [V2]. Dermoskopik kriterlerin birçoğu melanom ile nevüsler arasında ortaktır [M3].",
+            "aleyhte": "Arşiv oylamasında ilk üç sınıf arasında yer almamaktadır [ARSIV]."
+          },
+          {
+            "sinif": "df",
+            "lehte": "Arşiv oylamasında %28 oranla ikinci sırada oy almıştır [ARSIV].",
+            "aleyhte": "CNN ilk 3 olasılık çıktısında yer almamaktadır [CNN]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Nevüs ve melanom ayrımını sağlayan küresel ve lokal dermoskopik yapı desenleri [M1, M3]",
+          "Klasik ABCD kuralına uymayan veya benign lezyonları taklit eden melanomlardaki ince dermoskopik ipuçları [M5]",
+          "Pigment kaybı veya hipomelanotik şüphe durumunda vasküler dermoskopik kriterler [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 35,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 5,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0031543",
+      "gercek": "mel",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic features of melanoma",
+        "lesions mimicking melanoma on dermoscopy and differential diagnosis"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "24813835",
+        "20197749",
+        "28121084",
+        "20197750",
+        "39337982"
+      ],
+      "cikti": {
+        "ozet": "60 yaşında kadın hastanın üst ekstremite lezyonunda CNN %90 güvenle melanom (mel) kararı vermiştir [HASTA], [CNN]. Arşiv oylaması %71 oranında melanomu işaret etmekte [ARSIV] ve patoloji ile doğrulanmış en benzer 5 vakanın tümü melanom tanısı taşımaktadır [V1], [V2], [V3], [V4], [V5]. Konsey kapısı yaş, risk ve uyum faktörleri nedeniyle konsey değerlendirmesini tetiklemiştir [KAPI]. Literatür, melanomun benign lezyonları taklit edebileceğini ve erken teşhis için ayrıntılı dermoskopik değerlendirmenin kritik olduğunu vurgulamaktadır [M2], [M4], [M5].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN %90 yüksek kalibre güven oranı vermiştir [CNN]. Arşiv oylamasında %71 ile ilk sıradadır [ARSIV]. Patoloji ile doğrulanmış en benzer 5 vakanın tamamı melanomdur [V1], [V2], [V3], [V4], [V5]. Yaş ve anatomik bölge benzer vakalarla uyumludur [HASTA], [V1], [V4], [V5].",
+            "aleyhte": "Melanomun dermoskopik ve klinik görünümleri oldukça değişken olup benign lezyonları taklit edebilir [M2], [M5]."
+          },
+          {
+            "sinif": "bkl",
+            "lehte": "CNN ikinci olasılık olarak %9 pay vermiştir [CNN] ve arşiv oylamasında %14 oranında temsil edilmektedir [ARSIV].",
+            "aleyhte": "En yüksek benzerliğe sahip patoloji doğrulamalı vakaların hiçbirinde benign keratoz tanısı yoktur [V1], [V2], [V3], [V4], [V5]."
+          },
+          {
+            "sinif": "akiec",
+            "lehte": "Arşiv oylamasında %13 oranında oya sahiptir [ARSIV].",
+            "aleyhte": "CNN ilk üç tahmini arasında yer vermemiştir [CNN] ve en benzer vakalar arasında yer almamaktadır [V1], [V2], [V3], [V4], [V5]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "destekliyor",
+        "bakilacak_bulgular": [
+          "Klinik ABCD kuralı parametreleri (asimetri, sınır düzensizliği, renk çeşitliliği ve çap) [M5]",
+          "Nevüsler ile melanomlar arasında ayırıcı tanı sağlayan küresel ve lokal dermoskopik paternler [M1], [M3]",
+          "Anatomik lokalizasyona ve histopatolojik büyüme tipine özgü dermoskopik bulgular [M2]",
+          "Pigment içermeyen veya az pigmentli lezyon olasılığına karşı vasküler kriterler [M6]"
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 44,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 6,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    },
+    {
+      "image_id": "ISIC_0030238",
+      "gercek": "mel",
+      "cnn": "mel",
+      "arsiv": "mel",
+      "sorgular": [
+        "dermoscopic criteria to differentiate melanoma from melanocytic nevus",
+        "dermoscopic features of melanoma"
+      ],
+      "makale_pmid": [
+        "22481578",
+        "20197749",
+        "34178127",
+        "24813835"
+      ],
+      "cikti": {
+        "ozet": "Hasta sırt bölgesinde 45 yaşında erkek bir bireydir [HASTA]. CNN klinik eşikte melanom kararı vermiş olsa da kalibre güven %38 ile düşüktür ve en yüksek sınıf olasılığı %59 ile melanositik nevüse aittir [CNN]. Arşiv oylaması %63 oranında melanomu desteklerken [ARSIV], patoloji ile doğrulanmış en benzer 5 vakanın 4'ü melanositik nevüs olarak tanılanmıştır [V1][V2][V3][V4][V5]. Literatürde atipik nevüsler ile erken evre melanomların klinik ve dermoskopik açıdan yüksek benzerlik gösterdiği ve ayırıcı tanının güç olabileceği vurgulanmaktadır [M3][M4].",
+        "aday_tanilar": [
+          {
+            "sinif": "mel",
+            "lehte": "CNN klinik eşik sonucunda melanom kararı vermiştir [CNN]. Arşiv oylamasında vakaların %63'ü melanom yönünde ağırlıklanmıştır [ARSIV]. Patoloji onaylı benzer vakalardan biri melanomdur [V4].",
+            "aleyhte": "CNN kalibre güveni %38'dir ve ham olasılıkta melanom ikinci sıradadır [CNN]. Patoloji doğrulamalı en yüksek benzerliğe sahip vaka dahil 4 vaka melanositik nevüstür [V1][V2][V3][V5]."
+          },
+          {
+            "sinif": "nv",
+            "lehte": "CNN modelinde en yüksek olasılık %59 ile melanositik nevüstür [CNN]. Patoloji doğrulamalı en benzer 5 vakanın 4'ü melanositik nevüs tanısı almıştır [V1][V2][V3][V5].",
+            "aleyhte": "CNN klinik eşikli kararı melanom olarak belirlenmiştir [CNN]. Arşiv oylamasında nevüs oranı %37'de kalmıştır [ARSIV]."
+          }
+        ],
+        "en_olasi_tani": "mel",
+        "kanit_yonu": "belirsiz",
+        "bakilacak_bulgular": [
+          "Atipik nevüs ve erken evre melanom ayrımı için dermoskopik algoritmalar ve kontrol listelerinin uygulanması [M3].",
+          "Nevüs ve melanomda ortak görülebilen küresel ve yerel dermoskopik kriterlerin dikkatle değerlendirilmesi [M2].",
+          "Melanomun farklı histopatolojik tiplerine ait değişken dermoskopik özelliklerin incelenmesi [M4].",
+          "Pigmente lezyondaki alt-makroskobik yapıların histopatolojik karşılıklarının dermoskopik analizi [M1]."
+        ]
+      },
+      "dogrulama": {
+        "json_gecerli": true,
+        "alanlar_tam": true,
+        "en_olasi_gecerli": true,
+        "kanit_yonu_gecerli": true,
+        "aday_siniflar_gecerli": true,
+        "kaynak_sayisi": 29,
+        "uydurma_kaynaklar": [],
+        "kullanilan_makale": 4,
+        "kullanilan_vaka": 5,
+        "ozet_cumle": 4,
+        "kaynaksiz_cumle": 0
+      }
+    }
+  ]
+}

@@ -184,7 +184,7 @@ Zayıf noktalar: benign keratoz (0,87) ve, yalnız FAISS'te, vasküler lezyon (0
 
 ```
 notebooks/   Colab defterleri (NN_konu_vX.ipynb; v3 için _b0 ve _b3 çalıştırmaları ayrı defterlerdir; ayrıntı için notebooks/README.md)
-src/         Tekrar kullanılan Python kodları (`bulanik_kapi.py`: Adım 5 kapı modülü, `pubmed_arama.py`: Adım 6 arama modülü)
+src/         Tekrar kullanılan Python kodları (`bulanik_kapi.py`: Adım 5 kapı modülü, `pubmed_arama.py`: Adım 6 arama modülü, `llm_istemci.py` ve `literatur_ajani.py`: Adım 7 LLM istemcisi ve literatür ajanı)
 results/     Küçük sonuç tabloları, dondurulmuş ayar dosyaları (.json) ve grafikler
 docs/        Proje önerisi, tez notları (tez_notlari.md), taslaklar
 ```
